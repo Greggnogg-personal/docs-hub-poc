@@ -1,0 +1,43 @@
+name: Process Incoming Docs (POC)
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout docs hub repo
+        uses: actions/checkout@v4
+
+      - name: Find docs bundle
+        id: find
+        run: |
+          echo "Searching for docs-bundle.zip..."
+          BUNDLE_PATH=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep 'docs-bundle.zip' || true)
+          if [ -z "$BUNDLE_PATH" ]; then
+            echo "No bundle found in PR."
+            exit 0
+          fi
+          echo "Found bundle at: $BUNDLE_PATH"
+          echo "BUNDLE_PATH=$BUNDLE_PATH" >> $GITHUB_ENV
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          npm init -y
+          npm install unzipper
+
+      - name: Unpack bundle
+        env:
+          BUNDLE_PATH: ${{ env.BUNDLE_PATH }}
+          REPO_NAME: ${{ github.event.pull_request.head.repo.name }}
+          VERSION: ${{ github.event.pull_request.head.sha }}
+        run: |
+          node scripts/unpack-bundle.js
