@@ -10,7 +10,7 @@ async function unpackBundle(bundlePath, repoName, version) {
   fs.createReadStream(bundlePath)
     .pipe(unzipper.Extract({ path: targetDir }))
     .on('close', () => {
-      console.log(`Bundle unpacked to ${targetDir}`);
+      console.debug(`Bundle unpacked to ${targetDir}`);
     });
 }
 
