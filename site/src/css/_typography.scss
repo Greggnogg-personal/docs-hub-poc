@@ -1,0 +1,58 @@
+// ─── Typography Scale ─────────────────────────────────────────────────────────
+// All sizes use clamp() for fluid responsiveness.
+// Font-size tokens mirror the production site values.
+
+@use './_mixins.scss' as *;
+
+$sm:  rem(640px);
+$xl:  rem(1280px);
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  background-color: #001423;
+}
+
+// ── Heading tokens ──────────────────────────────────────────────────────────
+.text-h1 { font-size: clamp(1.75rem, 1.2vw + 1.5rem, 3.5rem); line-height: 1.1; letter-spacing: -0.04em; }
+.text-h2 { font-size: clamp(1.5rem,  1.0vw + 1.3rem, 3.0rem); line-height: 1.15; letter-spacing: -0.03em; }
+.text-h3 { font-size: clamp(1.25rem, 0.8vw + 1.1rem, 2.0rem); line-height: 1.2;  letter-spacing: -0.02em; }
+.text-h4 { font-size: clamp(1.1rem,  0.6vw + 1.0rem, 1.75rem); line-height: 1.2; letter-spacing: -0.015em; }
+
+// ── Body tokens ─────────────────────────────────────────────────────────────
+.text-20 { font-size: clamp(1rem,    0.4vw + 0.9rem, 1.25rem); line-height: 1.4; }
+.text-18 { font-size: clamp(0.95rem, 0.3vw + 0.85rem, 1.125rem); line-height: 1.4; }
+.text-17 { font-size: clamp(0.9rem,  0.3vw + 0.8rem, 1.0625rem); line-height: 1.5; }
+.text-16 { font-size: clamp(0.875rem,0.2vw + 0.8rem, 1.0rem); line-height: 1.5; }
+.text-14 { font-size: clamp(0.8rem,  0.1vw + 0.75rem, 0.875rem); line-height: 1.5; letter-spacing: 0.02em; }
+.text-13 { font-size: clamp(0.75rem, 0.1vw + 0.7rem, 0.8125rem); line-height: 1.4; letter-spacing: 0.02em; }
+
+// ── Prose ───────────────────────────────────────────────────────────────────
+.prose {
+  max-width: 100%;
+  color: inherit;
+
+  p   { @extend .text-17; }
+  a   { color: #00f2d4; text-decoration: none; font-weight: 500; &:hover { opacity: 0.8; } }
+
+  h1, h2, h3, h4 { color: #fff; font-weight: 700; margin-top: 1.5em; }
+
+  ul  { list-style: none; padding: 0; margin: 1.25em 0; }
+  li  {
+    @extend .text-17;
+    position: relative;
+    padding-left: 1.25rem;
+    margin-bottom: 0.5em;
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0;
+      height: 1.48em;
+      width: 3px;
+      border-radius: 99px;
+      background: #00f2d4;
+    }
+  }
+}

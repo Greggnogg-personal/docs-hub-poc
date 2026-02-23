@@ -1,0 +1,217 @@
+// ─── Global Styles ────────────────────────────────────────────────────────────
+// Entry point injected via docusaurus.config.ts → theme.customCss
+
+@use './brand-colors';
+@use './_mixins.scss' as *;
+@use './_navbar';
+@use './_typography.scss';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// ── Docusaurus CSS variables ─────────────────────────────────────────────────
+:root {
+  // Primary colour — Bright Teal
+  --ifm-color-primary:          #00f2d4;
+  --ifm-color-primary-dark:     #00d9be;
+  --ifm-color-primary-darker:   #00c5aa;
+  --ifm-color-primary-darkest:  #00a892;
+  --ifm-color-primary-light:    #1ff5d7;
+  --ifm-color-primary-lighter:  #33f7db;
+  --ifm-color-primary-lightest: #4df9df;
+
+  // Typography
+  --ifm-font-family-base: 'Plus Jakarta Sans', system-ui, -apple-system, segoe ui, roboto, sans-serif;
+  --ifm-code-font-size: 95%;
+  --ifm-h1-font-size: 2.25rem;
+
+  // Layout
+  --ifm-navbar-height: 4.0625rem;
+  --ifm-navbar-padding-vertical: 0;
+  --ifm-navbar-padding-horizontal: 0;
+
+  // Highlighted code line
+  --docusaurus-highlighted-code-line-bg: rgb(0 0 0 / 10%);
+}
+
+// ── Dark theme overrides ─────────────────────────────────────────────────────
+html[data-theme='dark'] {
+  --ifm-background-color: #001423;
+  --ifm-background-surface-color: #001423;
+
+  --ifm-color-primary:          #00f2d4;
+  --ifm-color-primary-dark:     #00d9be;
+  --ifm-color-primary-darker:   #00c5aa;
+  --ifm-color-primary-darkest:  #00a892;
+  --ifm-color-primary-light:    #1ff5d7;
+  --ifm-color-primary-lighter:  #33f7db;
+  --ifm-color-primary-lightest: #4df9df;
+
+  --docusaurus-highlighted-code-line-bg: rgb(0 0 0 / 30%);
+}
+
+// ── Accessibility: focus indicators ─────────────────────────────────────────
+*:focus { outline: 2px solid #00f2d4; outline-offset: 2px; }
+*:focus:not(:focus-visible) { outline: none; }
+button:focus, a:focus, input:focus, select:focus, textarea:focus {
+  outline: 2px solid #00f2d4;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgb(0 242 212 / 30%);
+}
+
+// Skip-nav link
+.skip-link {
+  position: absolute; top: -40px; left: 6px;
+  background: #000; color: #fff;
+  padding: 8px; z-index: 1000;
+  text-decoration: none; border-radius: 4px;
+  font-size: 14px; font-weight: 500;
+  transition: top 0.2s ease;
+  &:focus { top: 6px; }
+}
+
+// ── Layout containers ─────────────────────────────────────────────────────────
+.container {
+  @apply px-4 sm:px-8 md:px-12 mx-auto box-content w-auto max-w-[76rem];
+  .container { @apply px-0; }
+}
+
+// ── Product Edition Pills ─────────────────────────────────────────────────────
+.pill {
+  display: inline-block;
+  padding: 0 1em;
+  border-radius: 99px;
+  background-color: #00f2d4;
+  color: #001423;
+  font-size: 0.78em;
+  font-weight: 600;
+  margin-right: 0.4em;
+  margin-bottom: 0.4em;
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+}
+.pill-enterprise { background-color: #ffac00; color: #001423; }
+.pill-cloud      { background-color: #00d9be; color: #001423; }
+.pill-community  { background-color: #00bee0; color: #001423; }
+.pill-airgap     { background-color: #ff0078; color: #fff; }
+
+// ── Footer ───────────────────────────────────────────────────────────────────
+.footer { --ifm-footer-background-color: #001423; }
+
+// ── Sidebar ──────────────────────────────────────────────────────────────────
+.theme-doc-sidebar-container { background-color: #001423; }
+
+@media (width >= 997px) {
+  .theme-doc-sidebar-container {
+    position: sticky; top: 0;
+    height: calc(100vh - var(--ifm-navbar-height));
+    overflow: hidden;
+  }
+  .theme-doc-sidebar-container .menu {
+    height: 100%;
+    overflow: hidden auto;
+  }
+  // Custom scrollbar
+  .theme-doc-sidebar-container .menu::-webkit-scrollbar { width: 6px; }
+  .theme-doc-sidebar-container .menu::-webkit-scrollbar-track { background: transparent; }
+  .theme-doc-sidebar-container .menu::-webkit-scrollbar-thumb {
+    background: rgb(255 255 255 / 20%); border-radius: 3px;
+  }
+  .theme-doc-sidebar-container .menu::-webkit-scrollbar-thumb:hover {
+    background: rgb(255 255 255 / 30%);
+  }
+}
+
+// ── Doc content area ─────────────────────────────────────────────────────────
+.theme-doc-markdown.markdown {
+  min-width: 0; max-width: 100%;
+  overflow-wrap: break-word;
+  @media (width >= 996px) { padding-left: 1rem; padding-right: 1rem; }
+}
+.theme-doc-markdown.markdown h1:first-child { --ifm-h1-font-size: 2.25rem; }
+.theme-doc-markdown.markdown pre,
+.theme-doc-markdown.markdown .prism-code { max-width: 100%; overflow-x: auto; }
+.theme-doc-markdown.markdown table {
+  display: block; width: 100%; overflow-x: auto; white-space: nowrap;
+  @media (width <= 996px) { white-space: normal; }
+}
+.theme-doc-markdown.markdown img { max-width: 100%; height: auto; }
+
+// ── Product selector bar (two-filter: product + version) ─────────────────────
+.product-version-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.625rem 1rem;
+  background: #0a1f2e;
+  border-bottom: 1px solid rgb(255 255 255 / 8%);
+  font-size: 0.875rem;
+  position: sticky;
+  top: var(--ifm-navbar-height);
+  z-index: 50;
+}
+.product-version-bar select {
+  background: #001423;
+  color: #fff;
+  border: 1px solid rgb(255 255 255 / 20%);
+  border-radius: 6px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.875rem;
+  font-family: var(--ifm-font-family-base);
+  cursor: pointer;
+  outline: none;
+  &:hover { border-color: #00f2d4; }
+  &:focus { border-color: #00f2d4; box-shadow: 0 0 0 2px rgb(0 242 212 / 20%); }
+}
+.product-version-bar label { color: #6e7578; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+// ── Landing page ─────────────────────────────────────────────────────────────
+.landing-page {
+  max-width: 65rem; margin: 0 auto; padding: 4rem 1rem 6rem;
+
+  .main-title h1 {
+    font-size: clamp(2rem, 3vw + 1.5rem, 3.5rem);
+    font-weight: 800; color: #fff;
+    letter-spacing: -0.04em; margin-bottom: 0.5em;
+  }
+  .products-header h2 {
+    font-size: 1.1rem; text-transform: uppercase;
+    letter-spacing: 0.1em; color: #6e7578;
+    font-weight: 600; margin-bottom: 2rem;
+  }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: 1.25rem;
+  }
+  .product-card {
+    background: #0a1f2e;
+    border: 1px solid rgb(255 255 255 / 8%);
+    border-radius: 10px;
+    padding: 1.5rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    &:hover, &:focus {
+      border-color: #00f2d4;
+      box-shadow: 0 0 20px rgb(0 242 212 / 12%);
+      outline: none;
+    }
+    h3 { color: #00f2d4; font-size: 1.1rem; font-weight: 700; margin: 0 0 0.5rem; }
+    p  { color: #8c9396; font-size: 0.875rem; line-height: 1.5; margin: 0 0 1rem; }
+    .platform-links {
+      display: flex; flex-direction: column; gap: 0.3rem;
+      a { color: #00f2d4; font-size: 0.85rem; text-decoration: none;
+          &:hover { opacity: 0.75; } }
+    }
+  }
+}
+
+// ── Reduce motion ─────────────────────────────────────────────────────────────
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

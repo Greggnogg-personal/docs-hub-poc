@@ -1,0 +1,23 @@
+.btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 1.5rem;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: #002d28;
+  border: 1px solid rgba(0, 242, 212, 0.35);
+  color: #00f2d4;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+
+  &:hover {
+    background: rgba(0, 242, 212, 0.15);
+    box-shadow: 0 0 16px rgba(0, 242, 212, 0.3);
+  }
+}

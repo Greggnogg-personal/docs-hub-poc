@@ -1,0 +1,13 @@
+// ─── Sass Mixins ─────────────────────────────────────────────────────────────
+
+// Convert px to rem (base 16px)
+@function rem($px) {
+  @return calc($px / 16px) * 1rem;
+}
+
+// Clamp-based responsive property
+@mixin clamp($property, $min, $max, $min-width, $max-width) {
+  $slope: calc(($max - $min) / ($max-width - $min-width));
+  $intercept: calc($min - $slope * $min-width);
+  #{$property}: clamp(#{$min}, #{$intercept} + #{$slope} * 100vw, #{$max});
+}

@@ -1,0 +1,43 @@
+.pillBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: capitalize;
+  padding: 0.2rem 0.55rem;
+  border-radius: 99px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+/* Edition colour tokens — keep in sync with globals.scss */
+.pill-community {
+  background: rgba(0, 242, 212, 0.1);
+  border-color: rgba(0, 242, 212, 0.35);
+  color: #00f2d4;
+}
+
+.pill-enterprise {
+  background: rgba(131, 88, 255, 0.12);
+  border-color: rgba(131, 88, 255, 0.4);
+  color: #b09dff;
+}
+
+.pill-cloud {
+  background: rgba(58, 148, 255, 0.12);
+  border-color: rgba(58, 148, 255, 0.4);
+  color: #7ab8ff;
+}
+
+.pill-airgap {
+  background: rgba(110, 117, 120, 0.15);
+  border-color: rgba(110, 117, 120, 0.4);
+  color: #9ea4a7;
+}

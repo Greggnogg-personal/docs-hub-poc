@@ -1,43 +1,121 @@
-name: Process Incoming Docs (POC)
+name: Process Incoming Docs
 
 on:
   pull_request:
     types: [opened, synchronize]
+    paths:
+      - 'incoming/**/*.zip'
+
+  # Allow manual trigger for testing
+  workflow_dispatch:
+    inputs:
+      bundle_path:
+        description: 'Path to bundle (e.g., incoming/docs-bundle.zip)'
+        required: true
+        default: 'incoming/docs-bundle.zip'
 
 jobs:
-  unpack:
+  validate:
+    name: Validate Bundle
+    runs-on: ubuntu-latest
+    outputs:
+      product_name: ${{ steps.validate.outputs.product_name }}
+      product_slug: ${{ steps.validate.outputs.product_slug }}
+      version: ${{ steps.validate.outputs.version }}
+      sha: ${{ steps.validate.outputs.sha }}
+      bundle_path: ${{ steps.find.outputs.bundle_path }}
+
+    steps:
+      - name: Checkout docs hub
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Find bundle in PR
+        id: find
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            BUNDLE="${{ github.event.inputs.bundle_path }}"
+          else
+            # Find zip files changed in this PR
+            BUNDLE=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -E '\.zip$' | head -1 || true)
+          fi
+
+          if [ -z "$BUNDLE" ] || [ ! -f "$BUNDLE" ]; then
+            echo "No bundle found in PR changes"
+            echo "bundle_found=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          echo "Found bundle: $BUNDLE"
+          echo "bundle_path=$BUNDLE" >> $GITHUB_OUTPUT
+          echo "bundle_found=true" >> $GITHUB_OUTPUT
+
+      - name: Setup Python
+        if: steps.find.outputs.bundle_found == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate bundle
+        id: validate
+        if: steps.find.outputs.bundle_found == 'true'
+        run: |
+          python scripts/ingest_bundle.py "${{ steps.find.outputs.bundle_path }}" --validate-only
+
+  ingest:
+    name: Ingest Documentation
+    needs: validate
+    if: needs.validate.outputs.bundle_path != ''
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout docs hub repo
+      - name: Checkout docs hub
         uses: actions/checkout@v4
 
-      - name: Find docs bundle
-        id: find
-        run: |
-          echo "Searching for docs-bundle.zip..."
-          BUNDLE_PATH=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep 'docs-bundle.zip' || true)
-          if [ -z "$BUNDLE_PATH" ]; then
-            echo "No bundle found in PR."
-            exit 0
-          fi
-          echo "Found bundle at: $BUNDLE_PATH"
-          echo "BUNDLE_PATH=$BUNDLE_PATH" >> $GITHUB_ENV
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: |
-          npm init -y
-          npm install unzipper
+          python-version: '3.11'
 
       - name: Unpack bundle
-        env:
-          BUNDLE_PATH: ${{ env.BUNDLE_PATH }}
-          REPO_NAME: ${{ github.event.pull_request.head.repo.name }}
-          VERSION: ${{ github.event.pull_request.head.sha }}
+        id: unpack
         run: |
-          node scripts/unpack-bundle.js
+          python scripts/ingest_bundle.py "${{ needs.validate.outputs.bundle_path }}" --output-dir site/
+
+      - name: Show extracted structure
+        run: |
+          echo "📦 Contents extracted to site/"
+          find site/ -type f | head -20
+          echo ""
+          echo "Product: ${{ needs.validate.outputs.product_name }}"
+          echo "Version: ${{ needs.validate.outputs.version }}"
+          echo "Source:  ${{ needs.validate.outputs.sha }}"
+
+      - name: Smoke test - check index exists
+        run: |
+          SLUG="${{ needs.validate.outputs.product_slug }}"
+          VERSION="${{ needs.validate.outputs.version }}"
+          
+          # Check manifest was extracted
+          if [ ! -f "site/$SLUG/$VERSION/manifest.json" ]; then
+            echo "❌ manifest.json not found"
+            exit 1
+          fi
+          
+          # Check docs folder exists
+          if [ ! -d "site/$SLUG/$VERSION/docs" ]; then
+            echo "❌ docs/ folder not found"
+            exit 1
+          fi
+          
+          echo "✅ Smoke test passed"
+          echo "   - manifest.json: present"
+          echo "   - docs/ folder: present"
+
+      - name: Upload site artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-${{ needs.validate.outputs.product_slug }}-${{ needs.validate.outputs.version }}
+          path: site/
+          retention-days: 7

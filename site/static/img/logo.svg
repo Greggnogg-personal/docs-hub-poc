@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 32" fill="none">
+  <!-- NetBox wordmark in brand teal -->
+  <text x="0" y="23" font-family="Plus Jakarta Sans, Inter, sans-serif"
+        font-size="20" font-weight="800" fill="#00f2d4">NetBox</text>
+  <!-- "Labs" in grey -->
+  <text x="82" y="23" font-family="Plus Jakarta Sans, Inter, sans-serif"
+        font-size="20" font-weight="600" fill="#6e7578">Labs</text>
+</svg>

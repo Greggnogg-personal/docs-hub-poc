@@ -1,0 +1,210 @@
+/* Landing page styles */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #001423 0%, #020d18 100%);
+  padding: 6rem 1.5rem 5rem;
+  text-align: center;
+}
+
+.heroInner {
+  position: relative;
+  z-index: 1;
+  max-width: 52rem;
+  margin: 0 auto;
+}
+
+.heroBlob {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 50% at 50% 0%,
+    rgba(0, 242, 212, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.heroEyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #00f2d4;
+  margin-bottom: 1rem;
+}
+
+.heroTitle {
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: #fff;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.heroAccent { color: #00f2d4; }
+
+.heroSub {
+  font-size: 1.0625rem;
+  color: #b3b6b7;
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+/* Products */
+.products {
+  padding: 4rem 1.5rem 3rem;
+  background: #001423;
+}
+
+.sectionInner {
+  max-width: 76rem;
+  margin: 0 auto;
+}
+
+.sectionHeading {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 2rem;
+  letter-spacing: -0.01em;
+}
+
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 1.25rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  background: #020d18;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-decoration: none;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    border-color: rgba(0, 242, 212, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.cardTop { margin-bottom: 0.25rem; }
+
+.cardTitle {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.cardDesc {
+  font-size: 0.875rem;
+  color: #6e7578;
+  line-height: 1.5;
+  flex: 1;
+  margin: 0;
+}
+
+.cardCta {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+/* Edition pills on cards */
+.pill-community  { font-size: 0.6875rem; color: #00f2d4;  font-weight: 600; }
+.pill-cloud      { font-size: 0.6875rem; color: #7ab8ff;  font-weight: 600; }
+.pill-enterprise { font-size: 0.6875rem; color: #b09dff;  font-weight: 600; }
+
+/* Quick links */
+.quickLinks {
+  padding: 3rem 1.5rem;
+  background: #020d18;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.quickList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 0.75rem;
+}
+
+.quickLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: #001423;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  color: #b3b6b7;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: color 0.15s, border-color 0.15s;
+
+  &:hover { color: #00f2d4; border-color: rgba(0, 242, 212, 0.3); }
+}
+
+/* Community CTA */
+.community {
+  padding: 4rem 1.5rem;
+  background: #001423;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.communityTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.75rem;
+}
+
+.communitySub {
+  font-size: 1rem;
+  color: #6e7578;
+  max-width: 36rem;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+}
+
+.communityLinks {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.communityBtn {
+  background: #00f2d4;
+  color: #001423;
+  font-size: 0.875rem;
+  font-weight: 700;
+  padding: 0.65rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: opacity 0.15s;
+
+  &:hover { opacity: 0.85; }
+}
+
+.communityBtnOutline {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #b3b6b7;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.65rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: border-color 0.15s, color 0.15s;
+
+  &:hover { border-color: rgba(255, 255, 255, 0.5); color: #fff; }
+}

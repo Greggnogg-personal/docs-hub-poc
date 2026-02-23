@@ -1,0 +1,33 @@
+.docItemContainer {
+  padding: 0 var(--ifm-spacing-horizontal);
+}
+
+.docItemCol {
+  max-width: 100% !important;
+}
+
+.docItemColWithToc {
+  max-width: 75% !important;
+}
+
+.tocColumn {
+  max-width: 25% !important;
+  padding-left: var(--ifm-spacing-horizontal);
+}
+
+.docItemInner {
+  padding-top: 1rem;
+}
+
+/* Edition pills band */
+.pillBar {
+  margin: 0.75rem 0 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+/* Hide TOC on mobile */
+@media (width <= 996px) {
+  .tocColumn         { display: none; }
+  .docItemColWithToc { max-width: 100% !important; }
+}
