@@ -119,3 +119,33 @@ jobs:
           name: site-${{ needs.validate.outputs.product_slug }}-${{ needs.validate.outputs.version }}
           path: site/
           retention-days: 7
+
+      - name: Write job summary
+        run: |
+          SLUG="${{ needs.validate.outputs.product_slug }}"
+          VERSION="${{ needs.validate.outputs.version }}"
+          SHA="${{ needs.validate.outputs.sha }}"
+          PRODUCT="${{ needs.validate.outputs.product_name }}"
+          
+          cat >> $GITHUB_STEP_SUMMARY << EOF
+          # 📚 Documentation Ingested
+          
+          | Field | Value |
+          |-------|-------|
+          | **Product** | ${PRODUCT} |
+          | **Slug** | \`${SLUG}\` |
+          | **Version** | \`${VERSION}\` |
+          | **Source SHA** | \`${SHA}\` |
+          | **Extracted to** | \`site/${SLUG}/${VERSION}/\` |
+          
+          ## Files Extracted
+          \`\`\`
+          $(find site/${SLUG}/${VERSION}/ -type f | head -15)
+          \`\`\`
+          
+          ## Next Steps
+          - Review extracted docs in the artifact
+          - Merge PR to include in site build
+          - Docs will be available at \`/{slug}/{version}/\`
+          EOF
+          retention-days: 7
