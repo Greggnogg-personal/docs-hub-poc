@@ -27,7 +27,7 @@ jobs:
 
     steps:
       - name: Checkout docs hub
-        uses: actions/checkout@v4
+        uses: Greggnogg-personal/checkout@v4
         with:
           fetch-depth: 0
 
@@ -53,7 +53,7 @@ jobs:
 
       - name: Setup Python
         if: steps.find.outputs.bundle_found == 'true'
-        uses: actions/setup-python@v5
+        uses: Greggnogg-personal/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -71,10 +71,10 @@ jobs:
 
     steps:
       - name: Checkout docs hub
-        uses: actions/checkout@v4
+        uses: Greggnogg-personal/checkout@v4
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: Greggnogg-personal/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -114,7 +114,7 @@ jobs:
           echo "   - docs/ folder: present"
 
       - name: Upload site artifact
-        uses: actions/upload-artifact@v4
+        uses: Greggnogg-personal/upload-artifact@v4
         with:
           name: site-${{ needs.validate.outputs.product_slug }}-${{ needs.validate.outputs.version }}
           path: site/
