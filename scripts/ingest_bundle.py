@@ -85,7 +85,7 @@ def unpack_bundle(
         info["errors"].append(f"Bundle not found: {bundle_path}")
         return False, info
 
-    # Open and validate zip
+
     try:
         with zipfile.ZipFile(bundle_path, "r") as zf:
             # Check for manifest
@@ -128,12 +128,30 @@ def unpack_bundle(
 
             print(f"✓ Extracted {info['files_extracted']} files to {target_dir}")
 
+            # Cleanup: Remove manifest.json from site/docs/{slug}
+            manifest_in_slug = output_dir / product_slug / "manifest.json"
+            if manifest_in_slug.exists():
+                try:
+                    manifest_in_slug.unlink()
+                    print(f"Removed manifest: {manifest_in_slug}")
+                except Exception as e:
+                    print(f"Warning: Could not remove manifest: {manifest_in_slug} ({e})")
+
+        # Now that the zipfile is closed, remove the unpacked zip file from incoming
+        try:
+            bundle_path.unlink()
+            print(f"Removed bundle: {bundle_path}")
+        except Exception as e:
+            print(f"Warning: Could not remove bundle: {bundle_path} ({e})")
+
     except zipfile.BadZipFile as e:
         info["errors"].append(f"Invalid zip file: {e}")
         return False, info
     except Exception as e:
         info["errors"].append(f"Unpack error: {e}")
         return False, info
+
+    return True, info
 
     return True, info
 
@@ -154,8 +172,8 @@ def main() -> int:
     parser.add_argument(
         "--output-dir",
         "-o",
-        default="site",
-        help="Output directory for extracted docs (default: site/)",
+        default="site/docs",
+        help="Output directory for extracted docs (default: site/docs/)",
     )
     parser.add_argument(
         "--validate-only",
