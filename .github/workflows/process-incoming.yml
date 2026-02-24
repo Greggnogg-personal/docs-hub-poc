@@ -120,6 +120,19 @@ jobs:
           path: site/
           retention-days: 7
 
+      - name: Cleanup bundle zip
+        run: |
+          SLUG="${{ needs.validate.outputs.product_slug }}"
+          VERSION="${{ needs.validate.outputs.version }}"
+          SHA="${{ needs.validate.outputs.sha }}"
+          BUNDLE="incoming/${SLUG}/${SLUG}-v${VERSION}-${SHA}.zip"
+          if [ -f "$BUNDLE" ]; then
+            echo "Removing bundle: $BUNDLE"
+            rm -f "$BUNDLE"
+          else
+            echo "Bundle not found for cleanup: $BUNDLE"
+          fi
+
       - name: Write job summary
         run: |
           SLUG="${{ needs.validate.outputs.product_slug }}"
