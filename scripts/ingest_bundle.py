@@ -129,21 +129,7 @@ def unpack_bundle(
             print(f"✓ Extracted {info['files_extracted']} files to {target_dir}")
 
 
-            # Cleanup: Remove manifest.json from site/docs/{slug}/{version}
-            manifest_in_version = target_dir / "manifest.json"
-            if manifest_in_version.exists():
-                try:
-                    manifest_in_version.unlink()
-                    print(f"Removed manifest: {manifest_in_version}")
-                except Exception as e:
-                    print(f"Warning: Could not remove manifest: {manifest_in_version} ({e})")
-
-        # Now that the zipfile is closed, remove the unpacked zip file from incoming
-        try:
-            bundle_path.unlink()
-            print(f"Removed bundle: {bundle_path}")
-        except Exception as e:
-            print(f"Warning: Could not remove bundle: {bundle_path} ({e})")
+            # Do not remove manifest.json or bundle zip here; cleanup is handled by the workflow after all steps succeed.
 
     except zipfile.BadZipFile as e:
         info["errors"].append(f"Invalid zip file: {e}")

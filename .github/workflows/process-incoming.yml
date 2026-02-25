@@ -120,17 +120,26 @@ jobs:
           path: site/
           retention-days: 7
 
-      - name: Cleanup bundle zip
+
+      - name: Final cleanup (manifest & bundle)
+        if: always()
         run: |
           SLUG="${{ needs.validate.outputs.product_slug }}"
           VERSION="${{ needs.validate.outputs.version }}"
           SHA="${{ needs.validate.outputs.sha }}"
           BUNDLE="incoming/${SLUG}/${SLUG}-v${VERSION}-${SHA}.zip"
+          MANIFEST="site/${SLUG}/${VERSION}/manifest.json"
           if [ -f "$BUNDLE" ]; then
             echo "Removing bundle: $BUNDLE"
             rm -f "$BUNDLE"
           else
             echo "Bundle not found for cleanup: $BUNDLE"
+          fi
+          if [ -f "$MANIFEST" ]; then
+            echo "Removing manifest: $MANIFEST"
+            rm -f "$MANIFEST"
+          else
+            echo "Manifest not found for cleanup: $MANIFEST"
           fi
 
       - name: Write job summary
