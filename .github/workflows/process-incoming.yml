@@ -53,7 +53,7 @@ jobs:
 
       - name: Setup Python
         if: steps.find.outputs.bundle_found == 'true'
-        uses: Greggnogg-personal/setup-python@v5
+        uses: Greggnogg-personal/setup-python@v4
         with:
           python-version: '3.11'
 
@@ -74,7 +74,7 @@ jobs:
         uses: Greggnogg-personal/checkout@v4
 
       - name: Setup Python
-        uses: Greggnogg-personal/setup-python@v5
+        uses: Greggnogg-personal/setup-python@v4
         with:
           python-version: '3.11'
 
