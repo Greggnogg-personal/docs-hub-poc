@@ -13,7 +13,7 @@ const sidebars: SidebarsConfig = {
     docsPublisherLatest: [
       {
         type: 'doc',
-        id:   'docs-publisher/1.0.3/index',
+        id:   'docs-publisher/1.0.8/index',
         label: 'Overview',
       },
       {
@@ -21,11 +21,11 @@ const sidebars: SidebarsConfig = {
         label: 'Guides',
         collapsed: false,
         items: [
-          { type: 'doc', id: 'docs-publisher/1.0.3/DOCS_PUBLISHER_PROPOSAL', label: 'Integration Proposal' },
-          { type: 'doc', id: 'docs-publisher/1.0.3/ACT', label: 'Local Testing with Act' },
-          { type: 'doc', id: 'docs-publisher/1.0.3/E2E_LOCAL_INGEST', label: 'E2E Local Ingest' },
-          { type: 'doc', id: 'docs-publisher/1.0.3/E2E_FLOW_SUMMARY', label: 'E2E Flow Summary' },
-          { type: 'doc', id: 'docs-publisher/1.0.3/E2E_SETUP', label: 'E2E Setup' },
+          { type: 'doc', id: 'docs-publisher/1.0.8/DOCS_PUBLISHER_PROPOSAL', label: 'Integration Proposal' },
+          { type: 'doc', id: 'docs-publisher/1.0.8/ACT', label: 'Local Testing with Act' },
+          { type: 'doc', id: 'docs-publisher/1.0.8/E2E_LOCAL_INGEST', label: 'E2E Local Ingest' },
+          { type: 'doc', id: 'docs-publisher/1.0.8/E2E_FLOW_SUMMARY', label: 'E2E Flow Summary' },
+          { type: 'doc', id: 'docs-publisher/1.0.8/E2E_SETUP', label: 'E2E Setup' },
         ],
       },
     ],

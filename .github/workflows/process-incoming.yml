@@ -98,14 +98,18 @@ jobs:
           VERSION="${{ needs.validate.outputs.version }}"
           
           # Check manifest was extracted
-          if [ ! -f "site/$SLUG/$VERSION/manifest.json" ]; then
+          if [ ! -f "site/docs/$SLUG/$VERSION/manifest.json" ]; then
             echo "❌ manifest.json not found"
             exit 1
           fi
           
-          # Check docs folder exists
-          if [ ! -d "site/$SLUG/$VERSION/docs" ]; then
-            echo "❌ docs/ folder not found"
+          # Check docs existence in site/docs/$SLUG/$VERSION
+          if [ ! -d "site/docs/$SLUG/$VERSION" ]; then
+            echo "❌ docs directory not found: site/docs/$SLUG/$VERSION"
+            exit 1
+          fi
+          if [ ! -f "site/docs/$SLUG/$VERSION/index.md" ]; then
+            echo "❌ index.md not found in docs directory"
             exit 1
           fi
           
@@ -128,7 +132,7 @@ jobs:
           VERSION="${{ needs.validate.outputs.version }}"
           SHA="${{ needs.validate.outputs.sha }}"
           BUNDLE="incoming/${SLUG}/${SLUG}-v${VERSION}-${SHA}.zip"
-          MANIFEST="site/${SLUG}/${VERSION}/manifest.json"
+          MANIFEST="site/docs/${SLUG}/${VERSION}/manifest.json"
           if [ -f "$BUNDLE" ]; then
             echo "Removing bundle: $BUNDLE"
             rm -f "$BUNDLE"
@@ -158,11 +162,11 @@ jobs:
           | **Slug** | \`${SLUG}\` |
           | **Version** | \`${VERSION}\` |
           | **Source SHA** | \`${SHA}\` |
-          | **Extracted to** | \`site/${SLUG}/${VERSION}/\` |
+          | **Extracted to** | \`site/docs/${SLUG}/${VERSION}/\` |
           
           ## Files Extracted
           \`\`\`
-          $(find site/${SLUG}/${VERSION}/ -type f | head -15)
+          $(find site/docs/${SLUG}/${VERSION}/ -type f | head -15)
           \`\`\`
           
           ## Next Steps
