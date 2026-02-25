@@ -81,7 +81,7 @@ jobs:
       - name: Unpack bundle
         id: unpack
         run: |
-          python scripts/ingest_bundle.py "${{ needs.validate.outputs.bundle_path }}" --output-dir site/
+          python scripts/ingest_bundle.py "${{ needs.validate.outputs.bundle_path }}" --output-dir site/docs
 
       - name: Show extracted structure
         run: |
