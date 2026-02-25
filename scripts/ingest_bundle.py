@@ -128,14 +128,15 @@ def unpack_bundle(
 
             print(f"✓ Extracted {info['files_extracted']} files to {target_dir}")
 
-            # Cleanup: Remove manifest.json from site/docs/{slug}
-            manifest_in_slug = output_dir / product_slug / "manifest.json"
-            if manifest_in_slug.exists():
+
+            # Cleanup: Remove manifest.json from site/docs/{slug}/{version}
+            manifest_in_version = target_dir / "manifest.json"
+            if manifest_in_version.exists():
                 try:
-                    manifest_in_slug.unlink()
-                    print(f"Removed manifest: {manifest_in_slug}")
+                    manifest_in_version.unlink()
+                    print(f"Removed manifest: {manifest_in_version}")
                 except Exception as e:
-                    print(f"Warning: Could not remove manifest: {manifest_in_slug} ({e})")
+                    print(f"Warning: Could not remove manifest: {manifest_in_version} ({e})")
 
         # Now that the zipfile is closed, remove the unpacked zip file from incoming
         try:
