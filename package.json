@@ -1,0 +1,17 @@
+{
+  "name": "docs-hub-poc",
+  "version": "1.0.0",
+  "description": "Documentation hub for processing doc bundles from source repos",
+  "type": "module",
+  "main": "scripts/unpack-bundle.js",
+  "scripts": {
+    "unpack": "node scripts/unpack-bundle.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["documentation", "docs-hub"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "unzipper": "^0.12.3"
+  }
+}

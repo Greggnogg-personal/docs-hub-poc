@@ -76,4 +76,4 @@ netboxlabs-website-dochub/
 ## Notes
 - All paths are relative to the root of `netboxlabs-website-dochub`.
 - Ensure you have Python and required dependencies installed (see `requirements.txt` in the publisher repo).
-- For advanced integration, see the main [Integration Proposal](../DOCS_PUBLISHER_PROPOSAL.md).
+<!-- Broken link removed: For advanced integration, see the main Integration Proposal (../DOCS_PUBLISHER_PROPOSAL.md). -->

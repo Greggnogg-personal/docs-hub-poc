@@ -1,0 +1,145 @@
+---
+title: "NetBox Enterprise Helm Installation Guides"
+description: "Comprehensive installation guides and configuration files for deploying NetBox Enterprise on Kubernetes using Helm"
+tags:
+  - helm
+  - netbox
+  - enterprise
+  - kubernetes
+  - installation
+  - configuration
+  - networking
+  - api
+versions:
+  enterprise: v1.11
+status: current
+related_docs:
+  - netbox-enterprise-helm-overview.md
+  - netbox-enterprise-helm-prerequisites.md
+  - netbox-enterprise-helm-operations.md
+---
+
+import styles from './styles.module.css';
+import BackToTop from './components/BackToTop';
+import BetaBanner from './components/BetaBanner';
+
+# NetBox Enterprise Helm Installation Guides
+
+<BetaBanner />
+
+## Installation Guides
+
+<div className={styles.guidesSection}>
+  <div className={styles.tilesGrid}>
+    <a href="netbox-enterprise-helm-overview" className={styles.supportTile}>
+      <div className={styles.supportHeader}>
+        <h3>Overview</h3>
+        <span className={styles.supportType}>Getting Started</span>
+      </div>
+      <p>Architecture overview and deployment approach for NetBox Enterprise Helm deployment.</p>
+    </a>
+
+    <a href="netbox-enterprise-helm-prerequisites" className={styles.supportTile}>
+      <div className={styles.supportHeader}>
+        <h3>Prerequisites</h3>
+        <span className={styles.supportType}>Setup</span>
+      </div>
+      <p>System requirements, Kubernetes setup, storage, database, and licensing requirements.</p>
+    </a>
+
+    <a href="netbox-enterprise-helm-install" className={styles.supportTile}>
+      <div className={styles.supportHeader}>
+        <h3>Installation Guide</h3>
+        <span className={styles.supportType}>Core Setup</span>
+      </div>
+      <p>Step-by-step installation guide for NetBox Enterprise using Helm on Kubernetes.</p>
+    </a>
+
+    <a href="netbox-enterprise-helm-operations" className={styles.supportTile}>
+      <div className={styles.supportHeader}>
+        <h3>Operations Guide</h3>
+        <span className={styles.supportType}>Management</span>
+      </div>
+      <p>Post-installation operations, maintenance, upgrades, and ongoing management procedures.</p>
+    </a>
+  </div>
+</div>
+
+## Advanced Configuration
+
+<div className={styles.guidesSection}>
+  <div className={styles.tilesGrid}>
+    <a href="advanced/netbox-enterprise-helm-advanced-configuration" className={styles.supportTile}>
+      <div className={styles.supportHeader}>
+        <h3>Advanced Configuration</h3>
+        <span className={styles.supportType}>Advanced</span>
+      </div>
+      <p>Advanced Helm values template for complex configurations including external databases and custom ingress settings.</p>
+    </a>
+
+    <a href="advanced/netbox-enterprise-helm-external-database" className={styles.supportTile}>
+      <div className={styles.supportHeader}>
+        <h3>External Database</h3>
+        <span className={styles.supportType}>Database</span>
+      </div>
+      <p>Configuration template for connecting NetBox Enterprise to external PostgreSQL databases.</p>
+    </a>
+
+    <a href="advanced/netbox-enterprise-helm-private-registry" className={styles.supportTile}>
+      <div className={styles.supportHeader}>
+        <h3>Private Registry</h3>
+        <span className={styles.supportType}>Registry</span>
+      </div>
+      <p>YAML template for configuring private container registries in environments with restricted connectivity.</p>
+    </a>
+
+    <a href="advanced/netbox-enterprise-helm-deployment-examples" className={styles.supportTile}>
+      <div className={styles.supportHeader}>
+        <h3>Deployment Examples</h3>
+        <span className={styles.supportType}>Examples</span>
+      </div>
+      <p>Deployment examples for various environments and use cases.</p>
+    </a>
+  </div>
+</div>
+
+## Support & Resources
+
+<div className={styles.supportGrid}>
+  <a href="https://netboxlabs.com/docs/" target="_blank" className={styles.supportTile}>
+    <div className={styles.supportHeader}>
+      <h3>NetBox Labs Documentation</h3>
+      <span className={styles.supportType}>Official Docs</span>
+    </div>
+    <p>Comprehensive documentation for all NetBox Labs products including Enterprise, Cloud, and community resources.</p>
+  </a>
+
+  <a href="https://support.netboxlabs.com" target="_blank" className={styles.supportTile}>
+    <div className={styles.supportHeader}>
+      <h3>Enterprise Support Portal</h3>
+      <span className={styles.supportType}>Premium Support</span>
+    </div>
+    <p>Direct access to NetBox Labs engineering team for enterprise customers with priority support and SLA guarantees.</p>
+  </a>
+
+  <a href="mailto:support@netboxlabs.com" className={styles.supportTile}>
+    <div className={styles.supportHeader}>
+      <h3>General Support</h3>
+      <span className={styles.supportType}>Email Support</span>
+    </div>
+    <p>Contact NetBox Labs support team for general questions, licensing inquiries, and technical assistance.</p>
+  </a>
+</div>
+
+---
+
+<div className={styles.footer}>
+  <div className={styles.footerContent}>
+    <div className={styles.footerLeft}>
+      <strong>Version Compatibility:</strong> NetBox Enterprise 1.11.5+<br/>
+      <strong>Helm Chart:</strong> registry.enterprise.netboxlabs.com/netbox-enterprise/beta/netbox-enterprise
+    </div>
+  </div>
+</div> 
+
+<BackToTop /> 

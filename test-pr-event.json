@@ -1,0 +1,18 @@
+{
+  "pull_request": {
+    "number": 1,
+    "head": {
+      "repo": {
+        "name": "skeleton-netbox-submodule"
+      },
+      "ref": "docs/update-90430428cd27fb5eac6e59d4a1d9e3bd75fb748e",
+      "sha": "90430428cd27fb5eac6e59d4a1d9e3bd75fb748e"
+    },
+    "base": {
+      "ref": "main",
+      "sha": "a14a9fc"
+    }
+  },
+  "before": "a14a9fc",
+  "after": "9a252c3"
+}

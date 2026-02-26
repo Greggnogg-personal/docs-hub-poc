@@ -1,0 +1,36 @@
+/* Basic styles for Helm documentation components */
+
+.betaBanner {
+  background-color: #ffac00;
+  color: #000;
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin: 20px 0;
+  border: 1px solid #e5a003;
+  font-weight: 500;
+}
+
+.backToTop {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: none;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.backToTop:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+.backToTop.visible {
+  display: block;
+} 

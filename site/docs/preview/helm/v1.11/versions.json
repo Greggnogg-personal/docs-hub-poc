@@ -1,0 +1,44 @@
+{
+  "helm": {
+    "chart_version": "1.11.5",
+    "compatibility_version": "1.11.5+",
+    "display_version": "v1.11.5",
+    "private_registry_images": [
+      "proxy/netbox-enterprise/ghcr.io/netboxlabs/nbe-core:4.2.9_main-264",
+      "proxy/netbox-enterprise/index.docker.io/netboxlabs/nbe-utils:7",
+      "proxy/netbox-enterprise/ghcr.io/netboxlabs/diode-reconciler-pro:1.0.0",
+      "proxy/netbox-enterprise/ghcr.io/netboxlabs/diode-reconciler-pro:1.2.0",
+      "anonymous/index.docker.io/netboxlabs/diode-auth:1.2.0",
+      "anonymous/index.docker.io/netboxlabs/diode-ingester:1.2.0",
+      "anonymous/index.docker.io/netboxlabs/diode-reconciler:1.2.0",
+      "anonymous/index.docker.io/oryd/hydra:v2.3.0",
+      "anonymous/index.docker.io/oryd/k8s-toolbox:v0.0.7",
+      "anonymous/registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi9-16.9-2520",
+      "anonymous/registry.developers.crunchydata.com/crunchydata/postgres-operator:ubi9-5.8.2-0",
+      "anonymous/index.docker.io/bitnami/redis:7.4.3-debian-12-r0",
+      "anonymous/index.docker.io/bitnami/redis-sentinel:7.4.3-debian-12-r0",
+      "anonymous/registry.developers.crunchydata.com/crunchydata/crunchy-postgres-gis:ubi9-16.9-3.3-2520",
+      "anonymous/registry.developers.crunchydata.com/crunchydata/crunchy-postgres-gis:ubi9-16.9-3.4-2520",
+      "anonymous/ghcr.io/stakater/reloader:v1.4.5",
+      "anonymous/index.docker.io/library/busybox:1.37",
+      "anonymous/index.docker.io/replicated/replicated-sdk:1.7.1",
+      "anonymous/registry.k8s.io/ingress-nginx/controller:v1.11.3",
+      "anonymous/registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.4.3"
+    ],
+    "private_registry_images_core": [
+      "proxy/netbox-enterprise/ghcr.io/netboxlabs/nbe-core:4.2.9_main-264",
+      "proxy/netbox-enterprise/index.docker.io/netboxlabs/nbe-utils:7",
+      "anonymous/registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi9-16.9-2520",
+      "anonymous/registry.developers.crunchydata.com/crunchydata/postgres-operator:ubi9-5.8.2-0",
+      "anonymous/index.docker.io/bitnami/redis:7.4.3-debian-12-r0",
+      "anonymous/index.docker.io/bitnami/redis-sentinel:7.4.3-debian-12-r0",
+      "anonymous/registry.developers.crunchydata.com/crunchydata/crunchy-postgres-gis:ubi9-16.9-3.3-2520",
+      "anonymous/registry.developers.crunchydata.com/crunchydata/crunchy-postgres-gis:ubi9-16.9-3.4-2520",
+      "anonymous/ghcr.io/stakater/reloader:v1.4.5",
+      "anonymous/index.docker.io/library/busybox:1.37",
+      "anonymous/index.docker.io/replicated/replicated-sdk:1.7.1",
+      "anonymous/registry.k8s.io/ingress-nginx/controller:v1.11.3",
+      "anonymous/registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.4.3"
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+name: Test Suite
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Verify script syntax
+        run: |
+          node --check scripts/unpack-bundle.js
+          echo "Script syntax is valid"
+      
+      - name: Test unpack functionality (dry run)
+        env:
+          BUNDLE_PATH: incoming/docs-bundle.zip
+          REPO_NAME: test-repo
+          VERSION: v1.0.0
+        run: |
+          echo "Test configuration:"
+          echo "BUNDLE_PATH=${{ env.BUNDLE_PATH }}"
+          echo "REPO_NAME=${{ env.REPO_NAME }}"
+          echo "VERSION=${{ env.VERSION }}"

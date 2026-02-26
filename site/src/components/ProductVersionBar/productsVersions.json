@@ -1,0 +1,44 @@
+[
+  {
+    "product": "cloud",
+    "versions": [
+      "v1.13",
+      "v1.12",
+      "v1.10",
+      "v1.9"
+    ]
+  },
+  {
+    "product": "enterprise",
+    "versions": [
+      "v1.13",
+      "v1.12",
+      "v1.10",
+      "v1.9"
+    ]
+  },
+  {
+    "product": "assurance",
+    "versions": [
+      "v1.13",
+      "v1.12"
+    ]
+  },
+  {
+    "product": "discovery",
+    "versions": [
+      "v1.13",
+      "v1.12"
+    ]
+  },
+  {
+    "product": "netbox",
+    "versions": [
+      "v3.7",
+      "v4.4",
+      "v4.3",
+      "v4.2",
+      "v4.1"
+    ]
+  }
+]

@@ -1,0 +1,163 @@
+---
+title: "Advanced NetBox Enterprise Helm Deployment"
+description: "Advanced deployment scenarios, private registries, and automation for NetBox Enterprise Helm"
+tags:
+  - helm
+  - netbox
+  - enterprise
+  - kubernetes
+  - automation
+versions:
+  enterprise: v1.11
+status: current
+---
+
+import styles from '../styles.module.css';
+import BackToTop from '../components/BackToTop';
+import BetaBanner from '../components/BetaBanner';
+
+# Advanced NetBox Enterprise Helm Deployment
+
+<BetaBanner />
+
+<div className={styles.hero}>
+  <div className={styles.heroContent}>
+    <h1>Advanced NetBox Enterprise Helm Deployment</h1>
+    <p className={styles.heroDescription}>
+      Advanced deployment scenarios, private registries, and automation for NetBox Enterprise Helm installations
+    </p>
+    <div className={styles.versionInfo}>
+      <span className={styles.version}>NetBox Enterprise: v1.11.5</span>
+    </div>
+  </div>
+</div>
+
+<div className={styles.breadcrumb}>
+  <a href="../">← Back to Helm Installation Guides</a>
+  <span className={styles.separator}>|</span>
+  <span className={styles.current}>Advanced Deployment</span>
+</div>
+
+## Advanced Deployment Scenarios
+
+<div className={styles.guidesSection}>
+  <div className={styles.tilesGrid}>
+    <a href="netbox-enterprise-helm-deployment-examples" className={styles.supportTile}>
+      <div className={styles.supportHeader}>
+        <h3>Deployment Examples</h3>
+        <span className={styles.supportType}>Examples</span>
+      </div>
+      <p>Deployment examples with automation scripts and configurations for enterprise environments.</p>
+    </a>
+
+    <a href="netbox-enterprise-helm-private-registry" className={styles.supportTile}>
+      <div className={styles.supportHeader}>
+        <h3>Private Registry</h3>
+        <span className={styles.supportType}>Registry Configuration</span>
+      </div>
+      <p>Complete configuration for restricted environments with private container registries and restricted connectivity.</p>
+    </a>
+
+    <a href="netbox-enterprise-helm-external-database" className={styles.supportTile}>
+      <div className={styles.supportHeader}>
+        <h3>External Database</h3>
+        <span className={styles.supportType}>Database</span>
+      </div>
+      <p>Configuration templates for connecting to external PostgreSQL databases with high availability and performance optimization.</p>
+    </a>
+
+    <a href="netbox-enterprise-helm-advanced-configuration" className={styles.supportTile}>
+      <div className={styles.supportHeader}>
+        <h3>Advanced Configuration</h3>
+        <span className={styles.supportType}>Configuration</span>
+      </div>
+      <p>Advanced Helm values templates for complex configurations including custom ingress, security hardening, and performance tuning.</p>
+    </a>
+  </div>
+</div>
+
+## Cloud-Specific Configurations
+
+For cloud-specific Kubernetes configurations (AWS EKS, Azure AKS, GCP GKE), please **contact NetBox Labs support** for guidance based on your specific environment and requirements.
+
+## Prerequisites
+
+Before using advanced deployment scenarios, ensure you have completed:
+
+<div className={styles.supportGrid}>
+  <a href="../netbox-enterprise-helm-prerequisites" className={styles.supportTile}>
+    <div className={styles.supportHeader}>
+      <h3>Prerequisites</h3>
+      <span className={styles.supportType}>Required</span>
+    </div>
+    <p>System requirements, Kubernetes setup, and environment preparation for advanced deployments.</p>
+  </a>
+
+  <a href="../netbox-enterprise-helm-install" className={styles.supportTile}>
+    <div className={styles.supportHeader}>
+      <h3>Basic Installation</h3>
+      <span className={styles.supportType}>Foundation</span>
+    </div>
+    <p>Standard deployment process understanding before attempting advanced configurations.</p>
+  </a>
+
+  <a href="../netbox-enterprise-helm-operations" className={styles.supportTile}>
+    <div className={styles.supportHeader}>
+      <h3>Operations Guide</h3>
+      <span className={styles.supportType}>Management</span>
+    </div>
+    <p>Day-2 operations understanding for maintaining advanced deployments.</p>
+  </a>
+</div>
+
+## When to Use Advanced Scenarios
+
+Use advanced deployment scenarios when you need:
+
+- **Private registry integration** for air-gapped or security-restricted environments
+- **Automated CI/CD pipelines** for continuous deployment and infrastructure as code
+- **Complex networking setups** with custom ingress, load balancer, or service mesh configurations
+- **High availability deployments** with external databases, redundancy, and disaster recovery
+- **Security hardening** with custom RBAC, network policies, and compliance requirements
+
+## Getting Started
+
+1. **Start with platform-specific guides** - Choose your deployment platform and follow the complete setup
+2. **Follow automation scripts** - Use provided scripts for consistent and repeatable deployments
+3. **Customize for your environment** - Adapt examples to your specific infrastructure and requirements
+4. **Test in non-production first** - Validate all configurations before production deployment
+5. **Plan for operations** - Ensure monitoring, backup, and maintenance procedures are in place
+
+## Additional Resources
+
+<div className={styles.supportGrid}>
+  <a href="../netbox-enterprise-helm-operations#backup--restore-procedures" className={styles.supportTile}>
+    <div className={styles.supportHeader}>
+      <h3>Operations & Troubleshooting</h3>
+      <span className={styles.supportType}>Support</span>
+    </div>
+    <p>Backup procedures, support bundle generation, and operational guidance for deployment scenarios.</p>
+  </a>
+
+  <a href="../netbox-enterprise-helm-values-guide" className={styles.supportTile}>
+    <div className={styles.supportHeader}>
+      <h3>Values Guide</h3>
+      <span className={styles.supportType}>Reference</span>
+    </div>
+    <p>Comprehensive configuration reference for all Helm values and customization options.</p>
+  </a>
+
+  <a href="../netbox-enterprise-helm-operations" className={styles.supportTile}>
+    <div className={styles.supportHeader}>
+      <h3>Operations</h3>
+      <span className={styles.supportType}>Maintenance</span>
+    </div>
+    <p>Maintenance, upgrade procedures, and ongoing operational considerations for advanced deployments.</p>
+  </a>
+</div>
+
+---
+
+**Enterprise Support**: These advanced scenarios require careful planning and testing. Contact NetBox Labs support for production deployment assistance.
+
+<BackToTop /> 

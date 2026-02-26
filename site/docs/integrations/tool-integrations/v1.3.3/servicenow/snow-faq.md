@@ -1,0 +1,419 @@
+---
+title: Snow Faq
+description: ServiceNow NetBox CMDB Integration documentation - Version v1.3.3
+tags:
+  - cloud
+  - enterprise
+  - integration
+  - netbox
+  - servicenow
+  - version-1-3-3
+source: localdocs
+version: v1.3.3
+lastUpdatedAt: 1758858700000
+canonical: /docs/integrations/tool-integrations/v1.3.3/servicenow/snow-faq/
+---
+
+# FAQ and Troubleshooting
+
+## Table of Contents
+
+### [Installation Issues](#installation-issues)
+- [Update set installation won't get past the Preview phase](#update-set-installation-wont-get-past-the-preview-phase)
+- [What can I check to see that installation went well?](#what-can-i-check-to-see-that-installation-went-well)
+- [What new tables are included with the application?](#what-new-tables-are-included-with-the-application)
+- [Under which license should I subscribe the new tables?](#under-which-license-should-i-subscribe-the-new-tables)
+
+### [Guided Setup Issues](#guided-setup-issues)
+- [I'm missing some plugins and don't have a license for them](#im-missing-some-plugins-and-dont-have-a-license-for-them)
+- [What's the purpose of manually creating an HTTP(s) connection record?](#whats-the-purpose-of-manually-creating-an-https-connection-record)
+- [Both our NetBox and ServiceNow instances are in the cloud but we have a MID server on premises, should I configure it in step 2.1 or 2.2 of the Guided Setup?](#both-our-netbox-and-servicenow-instances-are-in-the-cloud-but-we-have-a-mid-server-on-premises-should-i-configure-it-in-step-21-or-22-of-the-guided-setup)
+- [The connection test keeps failing, how do I troubleshoot connections?](#the-connection-test-keeps-failing-how-do-i-troubleshoot-connections)
+
+### [Application Parameters](#application-parameters)
+- [What are the important Application parameters to know about initially?](#what-are-the-important-application-parameters-to-know-about-initially)
+- [How can I tell the application to increase the logging level?](#how-can-i-tell-the-application-to-increase-the-logging-level)
+- [What are the NetBox Tenant Group ID parameters used for?](#what-are-the-netbox-tenant-group-id-parameters-used-for)
+- [Why not use the sys_properties table instead of a custom table for parameters?](#why-not-use-the-sys_properties-table-instead-of-a-custom-table-for-parameters)
+- [What is the nbk parameter for?](#what-is-the-nbk-parameter-for)
+
+### [Data Synchronization](#data-synchronization)
+- [Data is not getting synchronized from ServiceNow to NetBox (export)](#data-is-not-getting-synchronized-from-servicenow-to-netbox-export)
+- [Data is not getting synchronized from NetBox to ServiceNow](#data-is-not-getting-synchronized-from-netbox-to-servicenow)
+- [I have objects in NetBox that are tagged with both ServiceNowSyncTo and ServiceNowSyncFrom, why is that?](#i-have-objects-in-netbox-that-are-tagged-with-both-servicenowsyncto-and-servicenowsyncfrom-why-is-that)
+- [How do I pause synchronization between systems, one way or another?](#how-do-i-pause-synchronization-between-systems-one-way-or-another)
+- [How do I cancel synchronization between systems, one way or another, for example if it's overly long?](#how-do-i-cancel-synchronization-between-systems-one-way-or-another-for-example-if-its-overly-long)
+- [I'm getting duplicate records in ServiceNow or NetBox](#im-getting-duplicate-records-in-servicenow-or-netbox)
+
+---
+
+## Installation Issues
+
+### Update set installation won't get past the Preview phase
+
+**Common Causes**:
+- **Missing Dependencies**: Ensure all required plugins are installed (IntegrationHub Starter Pack, System Import Sets)
+- **Version Incompatibility**: Verify the update set version matches your ServiceNow instance version
+- **Insufficient Privileges**: Confirm you have admin privileges on the ServiceNow instance
+- **Conflicting Customizations**: Local customizations may conflict with the application
+
+**Resolution Steps**:
+1. Check the preview log for specific error messages
+2. Verify all dependencies are installed and activated
+3. Review any conflicts shown in the preview results
+4. Contact NetBox Labs support if errors persist
+
+### What can I check to see that installation went well?
+
+**Verification Checklist**:
+1. **Application Menu**: Verify "NetBox" application appears in the application navigator
+2. **Tables Created**: Check that nine new tables are present, for example:
+   - `x_990381_netbox_cl_netbox_parameters`
+   - `x_990381_netbox_cl_netbox_notification_queue`
+   - `x_990381_netbox_cl_device_types_import_set`
+   - `x_990381_netbox_cl_devices_import_set`
+3. **Extended Fields**: Verify that 23 NetBox fields are added to existing tables:
+   - `cmdb_ci.x_990381_netbox_cl_netbox_correlation_id`
+   - `cmn_department.x_990381_netbox_cl_netbox_synchronize`
+   - `cmn_location.x_990381_netbox_cl_is_netbox_region`
+   - `core_company.x_990381_netbox_cl_netbox_ready_message`
+   - `cmdb_hardware_product_model.x_990381_netbox_cl_netbox_ready_export`
+4. **Guided Setup**: Access **All > NetBox > Configuration > Guided Setup** successfully
+5. **No Critical Errors**: Check system logs for any critical errors during installation
+
+### What new tables are included with the application?
+
+**Import Set Tables**:
+- `x_990381_netbox_cl_devices_import_set` - NetBox devices staging
+- `x_990381_netbox_cl_device_types_import_set` - NetBox device types staging
+- `x_990381_netbox_cl_netbox_sites_import` - NetBox sites staging
+- `x_990381_netbox_cl_netbox_regions_import` - NetBox regions staging
+- `x_990381_netbox_cl_netbox_clients_import` - NetBox tenants/clients staging
+- `x_990381_netbox_cl_netbox_departments_imports` - NetBox departments staging
+- `x_990381_netbox_cl_netbox_manufacturers_import` - NetBox manufacturers staging
+
+**Configuration Tables**:
+- `x_990381_netbox_cl_netbox_parameters` - Application configuration parameters
+- `x_990381_netbox_cl_netbox_notification_queue` - NetBox notification queue
+
+### Under which license should I subscribe the new tables?
+
+**Licensing Guidance**:
+- **Import Set Tables**: These are typically covered under the base ServiceNow platform license as they are temporary staging tables
+- **Configuration Tables**: These tables would usually be licensed under the ITSM allotment, but can be included wherever some allotments remain
+- **Extended Fields**: No additional licensing required as they extend existing licensed tables
+
+**Recommendation**: Consult with your ServiceNow account manager for specific licensing questions, as requirements may vary based on your ServiceNow contract and usage.
+
+## Guided Setup Issues
+
+### I'm getting a blank page when attempting to run the Guided Setup
+
+**Plugin version**:
+- In most cases, if the Guided Setup doesn't start, the Workflow Studio and/or the PlayBook Experience plugins are at an older version
+- Make sure you update the plugins to the versions stated in the installation guide (see [Installation and Setup](snow-installation.md))
+- If you updated your plugins after initially starting the Guided Setup, you will need to perform these steps to reinitialize it:
+  - With Admin privileges, navigate to **All > Adoption Services > Guided Setup**
+  - Depending on your ServiceNow and Guided Setup versions, select either **Build your guided setups** or **Go to Guided Setup Builder**
+  - Open the **NetBox CMDB Integration Setup** for edition
+  - Without doing any changes, finalize the Guided Setup and finish the procedure. This should reset the NetBox Guided Setup to a working state
+
+### I'm missing some plugins and don't have a license for them
+
+**Required Plugins**:
+- **Essential Plugins** (Required):
+  - IntegrationHub Starter Pack
+
+**Resolution Options**:
+1. **Contact ServiceNow**: Request licensing for required plugins through your ServiceNow account manager
+2. **PDI Users**: Activate plugins through the PDI configuration screen
+
+### What's the purpose of manually creating an HTTP(s) connection record?
+
+**Purpose and Importance**:
+- **Application Package**: This record cannot be packaged with the NetBox CMDB Integration scoped application and must therefore be created manually during the setup process
+- **API Communication**: Establishes the connection between ServiceNow and your NetBox instance
+- **Authentication**: Stores connection parameters and credential references
+- **MID Server Support**: Configures routing through MID servers if required
+- **Standardization**: Uses ServiceNow's standard HTTP connection framework for reliability
+
+**Key Requirements**:
+- **Name**: Must be exactly "NetBox API" (serves as a key for the application)
+- **Connection Alias**: Must be `x_990381_netbox_cl.NetBox_API`
+- **URL Format**: Must not include trailing slash
+
+### Both our NetBox and ServiceNow instances are in the cloud but we have a MID server on premises, should I configure it in step 2.1 or 2.2 of the Guided Setup?
+
+**Recommendation**: 
+- If both instances are in the cloud, direct communication is typically possible and no MID server is necessary
+- MID server configuration should only be used if network policies require it
+- Step 2.2 of the Guided Setup is for optional modifications after initial setup
+
+**Decision Factors**:
+- **Network Policies**: Check if your organization requires all API traffic to route through the MID server
+- **Security Requirements**: Some organizations mandate MID server usage for all external connections
+- **Performance**: Direct cloud-to-cloud communication is typically faster
+
+**Testing Approach**: Try without the MID server first, then add it in Step 2.2 if connection tests fail.
+
+### The connection test keeps failing, how do I troubleshoot connections?
+
+1. **Credential Records Not Properly Associated with the API Key**
+- A common mistake during Guided Setup is not saving a record before the step is marked as complete
+- Go back to the **Associate credentials** step and reset it
+- Associate the API Key again with the record and save or update it before marking the step as complete
+- Finish the Guided Setup and test your connections again
+- **Note**: Every time you restart a **Setup Credentials for...** step, passwords and keys are reset to new values. Make sure you take note of them again before saving
+
+2. **Verify Basic Connectivity**
+   - Check for firewall restrictions between instances
+   - Verify DNS resolution of NetBox hostname
+
+3. **Check API Token Format**
+   - Ensure API token is exactly 32 hexadecimal characters
+   - Verify token is active in NetBox
+   - Verify that the token in NetBox is associated with a user with sufficient privileges
+   - Test token manually using curl or Postman with a simple API call, for example:
+      - curl -X 'GET' 'https://YOUR-NETBOX-INSTANCE/api/dcim/sites/' -H 'accept: application/json' -H 'Authorization: Token YOUR-NETBOX-API-TOKEN'
+
+4. **Validate Connection Record**
+   - Confirm connection name is exactly "NetBox API"
+   - Verify URL has no trailing slash
+   - Check credential association is correct
+
+5. **Review Network Configuration**
+   - Check MID server configuration if applicable
+   - Verify proxy settings if required
+   - Test from ServiceNow's network diagnostic tools
+
+6. **Check Logs**
+   - Review ServiceNow system logs for detailed error messages
+   - Check NetBox logs for incoming connection attempts
+   - Look for authentication or authorization errors
+
+7. **Restart Guided Setup**
+   - Try running the Guided Setup again, making sure you note all usernames, passwords and API tokens as you go
+
+## Application Parameters
+
+### What are the important Application parameters to know about initially?
+
+**Critical Parameters for Initial Setup**:
+
+|Parameter | Purpose | Default Value |
+|-----------|---------|---------------|
+|**NetBox Log Level** | Controls application logging verbosity | Medium |
+|**API user in NetBox** | Username for ServiceNow → NetBox API calls | servicenow_integration |
+|**API user in ServiceNow** | Username for NetBox → ServiceNow API calls | netbox_integration |
+|**Import [ObjectType]** | Enable/disable synchronization from NetBox to ServiceNow (import direction) for specific objects | false |
+|**Export [ObjectType]** | Enable/disable synchronization from ServiceNow to NetBox (export direction) for specific objects | false |
+ |
+**Navigation**: Go to **All > NetBox > Configuration > Parameters** to view and modify these settings (see [User Guide, Application Parameters](snow-user-guide.md#application-parameters)).
+
+### How can I tell the application to increase the logging level?
+
+**Steps to Increase Logging**:
+
+1. **Navigate to Parameters**
+   - Go to **All > NetBox > Configuration > Parameters**
+   - Find the "NetBox Log Level" parameter
+
+2. **Available Log Levels** (case insensitive):
+   - **Low**: Basic operational messages
+   - **Medium**: Moderate detail including warnings (default)
+   - **High**: Detailed debug information
+
+3. **Change Log Level**
+   - Edit the "NetBox Log Level" parameter
+   - Set value to "High" for maximum detail
+   - Save the parameter
+
+4. **View Logs**
+   - Check **All > NetBox > Maintenance > NetBox Logs** for NetBox-related entries (see [Technical Information, Logging](snow-technical-info.md#logging))
+
+### What are the NetBox Tenant Group ID parameters used for?
+
+**Purpose**: These parameters map NetBox tenant groups to ServiceNow organizational structures.
+
+**Key Parameters**:
+- **NetBox Tenant Group ID for Customers**: Maps NetBox tenants to ServiceNow customer companies
+- **NetBox Tenant Group ID for Departments**: Maps NetBox tenants to ServiceNow departments
+
+**Usage**:
+- **Import**: Only tenants belonging to specified tenant groups are imported into Companies or Departments tables
+- **Export**: ServiceNow records are assigned to these tenant groups in NetBox
+- **Format**: Integer value representing the NetBox tenant group ID
+
+**Configuration**: Set these parameters manually in the Parameters table (see [User Guide, Application Parameters](snow-user-guide.md#application-parameters)).
+
+### Why not use the sys_properties table instead of a custom table for parameters?
+
+**Design Rationale**:
+
+**Advantages of Custom Table**:
+- **Scoped Isolation**: Parameters are contained within the application scope
+- **Enhanced Metadata**: Supports detailed descriptions and ordering
+- **Guided Setup Integration**: Easier integration with setup wizards
+- **Backup/Restore**: Parameters are included in application update sets
+- **Security**: Scoped access controls
+
+**Limitations of sys_properties**:
+- Global scope could cause conflicts
+- Limited metadata support
+- More complex Guided Setup integration
+- Potential interference with other applications
+
+### What is the nbk parameter for?
+
+**Purpose**: The `nbk` parameter is a **temporary administrative credential** used during the Guided Setup process.
+
+**Details**:
+- **Temporary Nature**: Created during Guided Setup and automatically deleted afterward
+- **Elevated Privileges**: Provides admin-level access to NetBox for configuration
+- **Security**: Ensures only low-privilege accounts remain after setup completion
+- **Usage**: Enables ServiceNow to configure NetBox settings during initial setup
+
+**Important**: This parameter should not exist after Guided Setup completion. If it persists, it may indicate an incomplete setup process. If you think the setup has concluded normally, you can and should delete the parameter from the table.
+
+## Data Synchronization
+
+### Data is not getting synchronized from ServiceNow to NetBox (export)
+
+1. **Check NetBox Ready for Export and NetBox Ready Message fields**
+   - On records that are not synchronizing, use the NetBox view to check the field values
+   - NetBox Ready for Export should be set to `true`
+   - If it is not, check the NetBox Ready Message for clues on why the field is not exporting
+     - If the record is not ready for export, an explanation outlining the cause will be provided
+
+2. **Check Synchronization Parameters**
+   - Verify "Export [ObjectType]" parameters are set to `true`
+   - In ServiceNow, check that specific records have "NetBox Synchronize" field set to `true`
+
+3. **Verify Connection Health**
+   - Test API connectivity in both directions by navigating to **All > NetBox > Maintenance > Test connections**
+   - Check credential validity and expiration
+   - Review HTTP connection record configuration
+
+4. **Review Flow Execution**
+   - Check **All > Process Automation > Flow Designer > Executions**
+   - Look for flows in the NetBox CMDB Integration application labeled as Create/Update NetBox [ObjectType] 
+   - Look for failed or stuck flow executions
+   - Review error messages in execution logs
+   - Increase NetBox Log Level parameter if logs are not verbose enough
+
+### Data is not getting synchronized from NetBox to ServiceNow
+
+1. **Check Event Queue and Clear Cache**
+   - If some objects were recently synchronized and you are trying again to import them, they may be stored in the Import Cache
+   - Navigate to **All > NetBox > Maintenance > Event Queue** and try finding the object in the list by filtering on Remote Object Type and Remote ID
+   - If the object figures in the cache, use the **Clear Import Cache** function in the same menu
+     - **Note**: Clearing the cache will not affect the import process but may impact performance if you are currently importing objects from NetBox in large quantities
+
+2. **Check tags in NetBox object**
+   - On NetBox, verify that objects not being synchronized are tagged with ServiceNowSyncTo
+
+3. **Check NetBox logs**
+   - Set the "NetBox Log Level" parameter to High
+   - Trigger the data synchronization again on the object by making a minor change to it
+   - Navigate to **All > NetBox > Maintenance > NetBox Logs**
+   - Filter logs on: 
+     - [NetBox Notification API]: check that a log record was created for the modified object and that the record was processed (Notification received) and not ignored (Ignoring notification)
+     - [NetBox Notification Queue Processing]: check that the received notification has values in all the fields
+     - [NetBoxSetup.rest]: check that a GET statement was issued for the object in question and that the response code is 200
+     - [Validate Remote Object]: check that the object validation was successful. Check the messages for clues about why it wasn't
+
+4. **Check Synchronization Parameters**
+   - Verify "Import NetBox [ObjectType]" parameters are set to `true`
+
+5. **Check the Buffer Data Sources**
+   - Navigate to **All > NetBox > Configuration > Data Sources**
+   - Open the NetBox Buffer data source and check if it contains attachments. Refresh the record several times to see if the number of attachments starts decreasing after a while
+
+6. **Check the other Data Sources**
+   - Navigate to **All > NetBox > Configuration > Data Sources**
+   - Open data sources other than Buffer
+   - Verify that data sources don't contain more than one attachment
+     - Delete all attachments if so and submit an incident report to NetBox Labs
+
+7. **Verify Connection Health**
+   - Test API connectivity in both directions by navigating to **All > NetBox > Maintenance > Test connections**
+   - Check credential validity and expiration
+   - Review HTTP connection record configuration
+
+8. **Webhook Configuration**
+   - Verify NetBox webhooks are properly configured
+   - Check webhook URL points to correct ServiceNow instance
+   - Confirm webhook authentication credentials
+
+9. **NetBox Event Rules**
+   - Ensure event rules are active in NetBox
+   - Verify event rules trigger on appropriate object changes
+   - Check event rule conditions and actions
+
+### I have objects in NetBox that are tagged with both ServiceNowSyncTo and ServiceNowSyncFrom, why is that?
+
+**The ServiceNowSyncTo Tag** is a synchronization control tag that tells ServiceNow to proceed with importing the objects when a webhook is received to its API. It is basically a granular, record-level way of telling the application which records should be synchronized in the NetBox to ServiceNow direction, and which shouldn't (see [User Guide, Synchronization Control](snow-user-guide.md#synchronization-control)).
+
+On the other hand, the **ServiceNowSyncFrom Tag** is only an indicator that data for this record was sent by ServiceNow. It is not meant to act as a control and will have no effect if removed. In fact, it will come back as soon as a new export on that record is triggered in ServiceNow.
+
+It is therefore possible for a record to have both tags if data flows in both directions.
+
+### How do I pause synchronization between systems, one way or another?
+
+**Temporary Pause Options**:
+
+**Option 1: Disable Synchronization Parameters**
+- Navigate to **All > NetBox > Configuration > Parameters**
+- Set "Import NetBox [ObjectType]" and "Export NetBox [ObjectType]" parameters to `false` for affected object types
+- This stops all synchronization for those objects
+
+**Option 2: Record-Level Control**
+- Set "NetBox Synchronize" field to `false` on specific records
+- This provides granular control over individual items
+
+**Option 3: Connection Disruption** (Emergency only)
+- Modify HTTP connection record to invalid URL
+- Remove or invalidate API credentials
+- **Warning**: This may cause errors in logs
+
+**Resuming Synchronization**:
+- Reverse the changes made during pause
+- Verify connection tests pass
+- Monitor initial synchronization for any issues
+
+**Best Practice**: Use Option 1 (parameter-based) for planned maintenance, as it's the cleanest approach and doesn't generate error messages.
+
+### How do I cancel synchronization between systems, one way or another, for example if it's overly long?
+
+**In the ServiceNow to NetBox direction**:
+- Navigate to Flow Designer
+- Open all flows labeled "Create/update NetBox [ObjectType]"
+- For each flow, go to Executions and cancel the ones that are pending
+
+**In the NetBox to ServiceNow direction**:
+- Navigate to **All > NetBox > Maintenance > Event queue**
+- Delete all records in the table
+
+### I'm getting duplicate records in ServiceNow or NetBox
+
+Duplicate records can occur during synchronization due to various factors such as data inconsistencies or identification rule challenges.
+
+**Mitigation Steps**:
+
+1. **Install and Configure the ServiceNow "Normalization Data Services" Plugin**
+   - The plugin helps keep the Company (core_company) table free of duplicates by setting up aliases for company names (ex. Cisco Systems, Inc.) and normalize them all to the same value (Cisco) 
+
+2. **Review ServiceNow Class Identification Rules**
+   - In ServiceNow's **CI Class Manager**, ensure that the identification rules are aligned with your organization's data strategy (see [Technical Information, CI Classification](snow-technical-info.md#ci-classification-identification-and-reconciliation))
+   - By default, **the NetBox Correlation ID** sits at an order of 250, after serial number but before name identifiers
+
+3. **Review Correlation IDs**
+   - Check that NetBox Correlation ID fields are properly populated
+   - Verify correlation IDs are unique and consistent between systems
+
+4. **Manual Cleanup**
+   - Identify duplicate records
+   - Manually merge or delete duplicates as appropriate
+   - Document patterns for NetBox Labs support
+
+**Future Improvements**: NetBox Labs is developing enhanced IRE rules and automated deduplication capabilities that will be included in future releases to minimize this issue.

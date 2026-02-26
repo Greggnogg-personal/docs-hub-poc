@@ -1,0 +1,292 @@
+# NetBox Documentation Tags
+# This file defines all available tags for the documentation site.
+# Only tags defined here will be used by the semantic tagging system.
+
+# Edition Tags (Most Important - These get prominent display as pills)
+cloud:
+  label: Cloud
+  permalink: /cloud
+  description: Documentation specific to NetBox Cloud deployments and features
+
+enterprise:
+  label: Enterprise
+  permalink: /enterprise
+  description: Documentation specific to NetBox Enterprise deployments and features
+
+community:
+  label: Community
+  permalink: /community
+  description: Documentation applicable to NetBox Community edition
+
+legacy:
+  label: Legacy
+  permalink: /legacy
+  description: Legacy documentation for previous versions
+
+previous:
+  label: Previous
+  permalink: /previous
+  description: Previous version documentation
+
+console:
+  label: Console
+  permalink: /console
+  description: NetBox Cloud Console administration and management
+
+helm:
+  label: Helm
+  permalink: /helm
+  description: Helm charts and Kubernetes deployment documentation
+
+airgap:
+  label: Air-Gap
+  permalink: /airgap
+  description: Documentation for air-gapped NetBox deployments
+
+# Product Tags (Top-level NetBox Labs products - ESSENTIAL)
+netbox:
+  label: NetBox
+  permalink: /netbox
+  description: Core NetBox platform functionality
+
+discovery:
+  label: Discovery
+  permalink: /discovery
+  description: NetBox Discovery network discovery and monitoring
+
+assurance:
+  label: Assurance
+  permalink: /assurance
+  description: NetBox Assurance network compliance and monitoring
+
+operator:
+  label: Operator
+  permalink: /operator
+  description: NetBox Operator AI-powered network operations
+
+# Content Type Tags (Primary document purpose - limit to 1 per document)
+overview:
+  label: Overview
+  permalink: /overview
+  description: Product overviews and introductory documentation
+
+features:
+  label: Features
+  permalink: /features
+  description: Feature descriptions and functionality overviews
+
+installation:
+  label: Installation
+  permalink: /installation
+  description: Installation guides and setup procedures
+
+configuration:
+  label: Configuration
+  permalink: /configuration
+  description: Configuration guides and setup instructions
+
+troubleshooting:
+  label: Troubleshooting
+  permalink: /troubleshooting
+  description: Troubleshooting guides and problem resolution
+
+getting-started:
+  label: Getting Started
+  permalink: /getting-started
+  description: Beginner tutorials and quickstart guides
+
+# Technical Category Tags (Key functionality areas)
+api:
+  label: API
+  permalink: /api
+  description: REST API documentation and examples
+
+authentication:
+  label: Authentication
+  permalink: /authentication
+  description: Authentication, authorization, and access control
+
+administration:
+  label: Administration
+  permalink: /administration
+  description: System administration and management tasks
+
+operations:
+  label: Operations
+  permalink: /operations
+  description: Day-to-day operations and maintenance procedures
+
+automation:
+  label: Automation
+  permalink: /automation
+  description: Automation scripts, workflows, and integration
+
+networking:
+  label: Networking
+  permalink: /networking
+  description: Network configuration and infrastructure concepts
+
+integration:
+  label: Integration
+  permalink: /integration
+  description: Third-party integrations and external system connectivity
+
+ai:
+  label: AI
+  permalink: /ai
+  description: Artificial intelligence features and AI-powered functionality
+
+copilot:
+  label: Copilot
+  permalink: /copilot
+  description: NetBox Copilot AI assistant features and documentation
+
+# NetBox Core Feature Tags (Essential NetBox functionality)
+dcim:
+  label: DCIM
+  permalink: /dcim
+  description: Data Center Infrastructure Management
+
+ipam:
+  label: IPAM
+  permalink: /ipam
+  description: IP Address Management
+
+circuits:
+  label: Circuits
+  permalink: /circuits
+  description: Circuit and provider management
+
+tenancy:
+  label: Tenancy
+  permalink: /tenancy
+  description: Multi-tenancy and organizational structures
+
+virtualization:
+  label: Virtualization
+  permalink: /virtualization
+  description: Virtual machine and cluster management
+
+wireless:
+  label: Wireless
+  permalink: /wireless
+  description: Wireless network infrastructure
+
+# Platform and Infrastructure Tags (Commonly used)
+kubernetes:
+  label: Kubernetes
+  permalink: /kubernetes
+  description: Kubernetes deployment and orchestration
+
+docker:
+  label: Docker
+  permalink: /docker
+  description: Docker containers and containerization
+
+# Additional Essential Tags (Frequently used)
+sso:
+  label: SSO
+  permalink: /sso
+  description: Single Sign-On authentication and configuration
+
+backup:
+  label: Backup
+  permalink: /backup
+  description: Data backup and recovery procedures
+
+storage:
+  label: Storage
+  permalink: /storage
+  description: Storage configuration, object storage, and media file management
+
+high-availability:
+  label: High Availability
+  permalink: /high-availability
+  description: High-availability deployments, failover, and redundancy features
+
+maintenance:
+  label: Maintenance
+  permalink: /maintenance
+  description: System maintenance and routine operations
+
+migration:
+  label: Migration
+  permalink: /migration
+  description: Migration guides and data transfer procedures
+
+security:
+  label: Security
+  permalink: /security
+  description: Security features, configurations, and best practices
+
+plugins:
+  label: Plugins
+  permalink: /plugins
+  description: Plugin development and third-party extensions
+
+database:
+  label: Database
+  permalink: /database
+  description: Database configuration and management
+
+postgresql:
+  label: PostgreSQL
+  permalink: /postgresql
+  description: PostgreSQL database setup and configuration
+
+private-registry:
+  label: Private Registry
+  permalink: /private-registry
+  description: Private container registry configuration and deployment setup
+
+# Discovery and Agent Tags
+orb-agent:
+  label: Orb Agent
+  permalink: /orb-agent
+  description: Lightweight and scalable discovery component for NetBox Discovery
+
+agent:
+  label: Agent
+  permalink: /agent
+  description: Software agents and automated discovery components
+
+distributed:
+  label: Distributed
+  permalink: /distributed
+  description: Distributed systems and multi-node architectures
+
+examples:
+  label: Examples
+  permalink: /examples
+  description: Code examples, configuration samples, and practical demonstrations
+
+setup:
+  label: Setup
+  permalink: /setup
+  description: Installation, configuration, and initial setup procedures
+
+# ServiceNow Integration Tags
+servicenow:
+  label: ServiceNow
+  permalink: /servicenow
+  description: ServiceNow integration and CMDB synchronization
+
+version-1-2-6:
+  label: v1.2.6
+  permalink: /version-1-2-6
+  description: ServiceNow NetBox CMDB Integration version 1.2.6
+
+version-1-3-3:
+  label: v1.3.3
+  permalink: /version-1-3-3
+  description: ServiceNow NetBox CMDB Integration version 1.3.3
+
+version-1-3-4:
+  label: v1.3.4
+  permalink: /version-1-3-4
+  description: ServiceNow NetBox CMDB Integration version 1.3.4
+
+version-1-4-012:
+  label: v1.4.012
+  permalink: /version-1-4-012
+  description: ServiceNow NetBox CMDB Integration version 1.4.012

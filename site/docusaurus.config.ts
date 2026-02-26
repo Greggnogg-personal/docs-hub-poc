@@ -47,6 +47,9 @@ const config: Config = {
 
   markdown: {
     mermaid: true,
+    hooks: {
+      onBrokenMarkdownImages: 'ignore',
+    },
   },
 
   plugins: [

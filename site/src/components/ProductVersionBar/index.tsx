@@ -1,23 +1,29 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useHistory, useLocation } from '@docusaurus/router';
 import styles from './styles.module.css';
+import productsVersions from './productsVersions.json';
 
-const PRODUCTS: { label: string; value: string }[] = [
-  { label: 'NetBox Community', value: 'netbox' },
-  { label: 'NetBox Cloud',     value: 'cloud' },
-  { label: 'NetBox Enterprise',value: 'enterprise' },
-  { label: 'Discovery',        value: 'discovery' },
-  { label: 'Assurance',        value: 'assurance' },
-];
 
-// Versions per product — expand as needed
-const VERSIONS: Record<string, { label: string; value: string }[]> = {
-  netbox:     [{ label: 'Latest', value: 'latest' }, { label: 'v4.1', value: 'v4.1' }, { label: 'v4.0', value: 'v4.0' }],
-  cloud:      [{ label: 'Latest', value: 'latest' }],
-  enterprise: [{ label: 'Latest', value: 'latest' }],
-  discovery:  [{ label: 'Latest', value: 'latest' }],
-  assurance:  [{ label: 'Latest', value: 'latest' }],
-};
+function sortVersions(versions: string[]): string[] {
+  // Sort descending, semver-aware (basic)
+  return versions.slice().sort((a, b) => {
+    const pa = a.split('.').map(Number);
+    const pb = b.split('.').map(Number);
+    for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+      const na = pa[i] || 0;
+      const nb = pb[i] || 0;
+      if (na !== nb) return nb - na;
+    }
+    return 0;
+  });
+}
+
+const PRODUCTS = productsVersions.map((p: { product: string; versions: string[] }) => ({ label: p.product, value: p.product }));
+const VERSIONS: Record<string, { label: string; value: string }[]> = {};
+productsVersions.forEach((p: { product: string; versions: string[] }) => {
+  const sorted = sortVersions(p.versions);
+  VERSIONS[p.product] = sorted.map((v: string) => ({ label: v, value: v }));
+});
 
 /** Parse /docs/{product}/{version}/{...rest} */
 function parsePath(pathname: string): { product: string; version: string; rest: string } {
@@ -29,36 +35,51 @@ function parsePath(pathname: string): { product: string; version: string; rest: 
   };
 }
 
+
 export default function ProductVersionBar(): React.ReactElement | null {
   const location  = useLocation();
-  const history   = useHistory();
+  const history = useHistory();
   const { product, version } = parsePath(location.pathname);
 
-  const [selectedProduct, setSelectedProduct] = useState(product || 'netbox');
-  const [selectedVersion, setSelectedVersion] = useState(version || 'latest');
+  // Find default version: prefer 'latest', else highest
+  function getDefaultVersion(prod: string): string {
+    const vers = VERSIONS[prod]?.map(v => v.value) || [];
+    if (vers.includes('latest')) return 'latest';
+    return vers[0] || '';
+  }
+
+  const [selectedProduct, setSelectedProduct] = useState(product || PRODUCTS[0]?.value || '');
+  const [selectedVersion, setSelectedVersion] = useState(() => {
+    if (version && version !== '') return version;
+    return getDefaultVersion(product || PRODUCTS[0]?.value || '');
+  });
 
   // Sync selectors when URL changes (back/forward navigation)
   useEffect(() => {
     const { product: p, version: v } = parsePath(location.pathname);
-    if (p) { setSelectedProduct(p); setSelectedVersion(v); }
+    setSelectedProduct(p || PRODUCTS[0]?.value || '');
+    setSelectedVersion(v || getDefaultVersion(p || PRODUCTS[0]?.value || ''));
   }, [location.pathname]);
 
-  const navigate = useCallback((prod: string, ver: string) => {
-    history.push(`/docs/${prod}/${ver}/`);
-  }, [history]);
 
   const handleProductChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const prod = e.target.value;
-    const ver  = VERSIONS[prod]?.[0]?.value ?? 'latest';
+    const ver  = getDefaultVersion(prod);
+    // Always navigate, even if the value matches the current state
     setSelectedProduct(prod);
     setSelectedVersion(ver);
-    navigate(prod, ver);
+    setTimeout(() => {
+      history.push(`/docs/${prod}/${ver}/`);
+    }, 0);
   };
 
   const handleVersionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const ver = e.target.value;
+    // Always navigate, even if the value matches the current state
     setSelectedVersion(ver);
-    navigate(selectedProduct, ver);
+    setTimeout(() => {
+      history.push(`/docs/${selectedProduct}/${ver}/`);
+    }, 0);
   };
 
   return (
@@ -98,7 +119,6 @@ export default function ProductVersionBar(): React.ReactElement | null {
               value={selectedVersion}
               onChange={handleVersionChange}
               aria-label="Select version"
-              disabled={(VERSIONS[selectedProduct] ?? []).length <= 1}
             >
               {(VERSIONS[selectedProduct] ?? [{ label: 'Latest', value: 'latest' }]).map(v => (
                 <option key={v.value} value={v.value}>{v.label}</option>
