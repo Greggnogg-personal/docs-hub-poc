@@ -92,30 +92,37 @@ jobs:
           echo "Version: ${{ needs.validate.outputs.version }}"
           echo "Source:  ${{ needs.validate.outputs.sha }}"
 
-      - name: Smoke test - check index exists
+      - name: Smoke test - validate extracted content
         run: |
           SLUG="${{ needs.validate.outputs.product_slug }}"
           VERSION="${{ needs.validate.outputs.version }}"
-          
-          # Check manifest was extracted
+
+          # Hard fail: manifest must be present (required by ingest contract)
           if [ ! -f "site/docs/$SLUG/$VERSION/manifest.json" ]; then
             echo "❌ manifest.json not found"
             exit 1
           fi
-          
-          # Check docs existence in site/docs/$SLUG/$VERSION
+
+          # Hard fail: docs directory must exist and contain at least one markdown file
           if [ ! -d "site/docs/$SLUG/$VERSION" ]; then
             echo "❌ docs directory not found: site/docs/$SLUG/$VERSION"
             exit 1
           fi
-          if [ ! -f "site/docs/$SLUG/$VERSION/index.md" ]; then
-            echo "❌ index.md not found in docs directory"
+          MD_COUNT=$(find "site/docs/$SLUG/$VERSION" -name "*.md" -not -name "manifest.json" | wc -l)
+          if [ "$MD_COUNT" -eq 0 ]; then
+            echo "❌ No markdown files found in site/docs/$SLUG/$VERSION"
             exit 1
           fi
-          
+
+          # Warning only: index.md absence is not fatal — landing_page is configurable
+          # in .docs-publisher.yaml metadata.landing_page
+          if [ ! -f "site/docs/$SLUG/$VERSION/index.md" ]; then
+            echo "⚠️  index.md not found — set metadata.landing_page in .docs-publisher.yaml if using a different entry point"
+          fi
+
           echo "✅ Smoke test passed"
           echo "   - manifest.json: present"
-          echo "   - docs/ folder: present"
+          echo "   - docs/ folder: present ($MD_COUNT markdown files)"
 
       - name: Upload site artifact
         uses: actions/upload-artifact@v4  # TODO: pin to SHA — required if org policy restricts floating tags
