@@ -140,8 +140,6 @@ def unpack_bundle(
 
     return True, info
 
-    return True, info
-
 
 def write_github_output(key: str, value: str) -> None:
     """Write output for GitHub Actions."""
