@@ -125,6 +125,7 @@ jobs:
           echo "   - docs/ folder: present ($MD_COUNT markdown files)"
 
       - name: Upload site artifact
+        if: ${{ !env.ACT }}  # skip when running locally via act (no ACTIONS_RUNTIME_TOKEN)
         uses: actions/upload-artifact@v4  # TODO: pin to SHA — required if org policy restricts floating tags
         with:
           name: site-${{ needs.validate.outputs.product_slug }}-${{ needs.validate.outputs.version }}
