@@ -111,7 +111,7 @@ def unpack_bundle(
 
             # If validate-only, we're done
             if validate_only:
-                print(f"✓ Manifest valid: {manifest['product']['name']} v{manifest['version']['version']}")
+                print(f"[OK] Manifest valid: {manifest['product']['name']} v{manifest['version']['version']}")
                 return True, info
 
             # Extract to output directory
@@ -126,7 +126,7 @@ def unpack_bundle(
                 zf.extract(name, target_dir)
                 info["files_extracted"] += 1
 
-            print(f"✓ Extracted {info['files_extracted']} files to {target_dir}")
+            print(f"[OK] Extracted {info['files_extracted']} files to {target_dir}")
 
 
             # Do not remove manifest.json or bundle zip here; cleanup is handled by the workflow after all steps succeed.
@@ -201,7 +201,7 @@ def main() -> int:
 
         return 0
     else:
-        print("✗ Bundle validation failed:")
+        print("[FAIL] Bundle validation failed:")
         for error in info["errors"]:
             print(f"  - {error}")
 
