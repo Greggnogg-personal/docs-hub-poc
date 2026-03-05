@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "start": "docusaurus start --host 0.0.0.0",
+    "generate": "tsx generateSidebar.ts",
+    "prebuild": "npm run generate",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
@@ -40,13 +42,22 @@
     "prettier": "^3.3.0",
     "sass": "^1.87.0",
     "tailwindcss": "^3.4.0",
+    "tsx": "^4.21.0",
     "typescript": "~5.6.2"
   },
   "engines": {
     "node": ">=18.0.0"
   },
   "browserslist": {
-    "production": [">0.5%", "not dead", "not op_mini all"],
-    "development": ["last 3 chrome version", "last 3 firefox version", "last 5 safari version"]
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 3 chrome version",
+      "last 3 firefox version",
+      "last 5 safari version"
+    ]
   }
 }

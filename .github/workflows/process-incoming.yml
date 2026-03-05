@@ -124,6 +124,16 @@ jobs:
           echo "   - manifest.json: present"
           echo "   - docs/ folder: present ($MD_COUNT markdown files)"
 
+      - name: Setup Node.js (for sidebar generation)
+        uses: actions/setup-node@v4  # TODO: pin to SHA — required if org policy restricts floating tags
+        with:
+          node-version: '18'
+
+      - name: Regenerate sidebars and navigation
+        # npx downloads tsx on demand — no need to install all site deps here
+        run: npx --yes tsx generateSidebar.ts
+        working-directory: site
+
       - name: Upload site artifact
         if: ${{ !env.ACT }}  # skip when running locally via act (no ACTIONS_RUNTIME_TOKEN)
         uses: actions/upload-artifact@v4  # TODO: pin to SHA — required if org policy restricts floating tags

@@ -27,10 +27,10 @@ function main() {
   runStep('npm run clear', 'Clean build output');
 
   // Generate missing index.md files
-  runStep('npx ts-node generateMissingIndexes.ts', 'Generate missing index.md files');
+  runStep('npx tsx generateMissingIndexes.ts', 'Generate missing index.md files');
 
   // Generate sidebar and navigation
-  runStep('npx ts-node ../generateSidebar.ts', 'Generate sidebar and navigation');
+  runStep('npx tsx ../generateSidebar.ts', 'Generate sidebar and navigation');
 
   // Build the site
   runStep('npm run build', 'Build Docusaurus site');

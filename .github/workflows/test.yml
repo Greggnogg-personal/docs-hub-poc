@@ -7,33 +7,95 @@ on:
     branches: [ main, develop ]
 
 jobs:
-  test:
+  test-ingest:
+    name: Test ingest_bundle.py
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Create a minimal test bundle
+        run: |
+          mkdir -p /tmp/test-docs
+          cat > /tmp/test-docs/index.md << 'EOF'
+          # Test Product v1.0.0
+          Test documentation page.
+          EOF
+
+          # Build manifest matching ingest contract
+          cat > /tmp/manifest.json << 'EOF'
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "product": { "name": "Test Product", "slug": "test-product" },
+            "version": { "version": "1.0.0" },
+            "source": { "sha": "abc123def456abc123def456abc123def456abc123", "sha_short": "abc123d" },
+            "files": [{ "path": "index.md" }],
+            "stats": { "total_files": 1 }
+          }
+          EOF
+
+          cd /tmp && zip -j test-bundle.zip manifest.json test-docs/index.md
+          echo "Bundle created: $(du -sh /tmp/test-bundle.zip | cut -f1)"
+
+      - name: Validate bundle (--validate-only)
+        run: |
+          python scripts/ingest_bundle.py /tmp/test-bundle.zip --validate-only
+          echo "Validation passed"
+
+      - name: Unpack bundle to temp dir
+        run: |
+          python scripts/ingest_bundle.py /tmp/test-bundle.zip --output-dir /tmp/site-out
+          echo "Extracted files:"
+          find /tmp/site-out -type f
+
+      - name: Verify extraction structure
+        run: |
+          # Expect: /tmp/site-out/test-product/1.0.0/index.md
+          if [ ! -f "/tmp/site-out/test-product/1.0.0/index.md" ]; then
+            echo "❌ Expected file not found: test-product/1.0.0/index.md"
+            find /tmp/site-out -type f
+            exit 1
+          fi
+          echo "✅ Extraction structure correct: test-product/1.0.0/index.md present"
+
+  test-sidebar-generator:
+    name: Test sidebar generator
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-      
-      - name: Install dependencies
-        run: npm install
-      
-      - name: Verify script syntax
+
+      - name: Run sidebar generator
+        run: npx --yes tsx generateSidebar.ts
+        working-directory: site
+
+      - name: Verify outputs exist and are non-empty
         run: |
-          node --check scripts/unpack-bundle.js
-          echo "Script syntax is valid"
-      
-      - name: Test unpack functionality (dry run)
-        env:
-          BUNDLE_PATH: incoming/docs-bundle.zip
-          REPO_NAME: test-repo
-          VERSION: v1.0.0
-        run: |
-          echo "Test configuration:"
-          echo "BUNDLE_PATH=${{ env.BUNDLE_PATH }}"
-          echo "REPO_NAME=${{ env.REPO_NAME }}"
-          echo "VERSION=${{ env.VERSION }}"
+          if [ ! -f "site/sidebars.ts" ]; then
+            echo "❌ sidebars.ts not generated"
+            exit 1
+          fi
+          if [ ! -f "site/src/components/ProductVersionBar/productsVersions.json" ]; then
+            echo "❌ productsVersions.json not generated"
+            exit 1
+          fi
+          SIDEBAR_LINES=$(wc -l < site/sidebars.ts)
+          PV_ENTRIES=$(python3 -c "import json; d=json.load(open('site/src/components/ProductVersionBar/productsVersions.json')); print(len(d))")
+          echo "✅ sidebars.ts: ${SIDEBAR_LINES} lines"
+          echo "✅ productsVersions.json: ${PV_ENTRIES} products"
+          if [ "$PV_ENTRIES" -eq 0 ]; then
+            echo "❌ productsVersions.json is empty"
+            exit 1
+          fi
