@@ -1,6 +1,7 @@
 import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import productsVersions from './src/components/ProductVersionBar/productsVersions.json';
 
 const config: Config = {
   title: 'NetBox Documentation',
@@ -65,6 +66,16 @@ const config: Config = {
       };
     },
     'docusaurus-plugin-sass',
+    // Redirect /docs/{product}/latest/ → /docs/{product}/ for products without
+    // a real 'latest' version folder.
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: (productsVersions as { product: string; versions: string[] }[])
+          .filter(p => !p.versions.includes('latest'))
+          .map(p => ({ from: `/docs/${p.product}/latest/`, to: `/docs/${p.product}/` })),
+      },
+    ],
   ],
 
   themes: ['@docusaurus/theme-mermaid'],

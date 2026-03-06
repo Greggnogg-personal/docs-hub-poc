@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from '@docusaurus/router';
 import styles from './styles.module.css';
 import productsVersions from './productsVersions.json';
@@ -30,7 +30,7 @@ function parsePath(pathname: string): { product: string; version: string; rest: 
   const m = pathname.match(/^\/docs\/([^/]+)\/([^/]*)(\/.*)?$/);
   return {
     product: m?.[1] ?? '',
-    version: m?.[2] ?? 'latest',
+    version: m?.[2] ?? '',
     rest:    m?.[3] ?? '',
   };
 }
@@ -41,11 +41,18 @@ export default function ProductVersionBar(): React.ReactElement | null {
   const history = useHistory();
   const { product, version } = parsePath(location.pathname);
 
-  // Find default version: prefer 'latest', else highest
+  // Find default version: prefer 'latest', else highest.
+  // Returns '' if the product has no versions (fall back to product overview page).
   function getDefaultVersion(prod: string): string {
     const vers = VERSIONS[prod]?.map(v => v.value) || [];
     if (vers.includes('latest')) return 'latest';
     return vers[0] || '';
+  }
+
+  // Returns true when the product has a 'latest' folder; false means we
+  // should land on the product-root overview page instead.
+  function hasLatest(prod: string): boolean {
+    return (VERSIONS[prod]?.map(v => v.value) || []).includes('latest');
   }
 
   const [selectedProduct, setSelectedProduct] = useState(product || PRODUCTS[0]?.value || '');
@@ -64,13 +71,16 @@ export default function ProductVersionBar(): React.ReactElement | null {
 
   const handleProductChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const prod = e.target.value;
-    const ver  = getDefaultVersion(prod);
-    // Always navigate, even if the value matches the current state
     setSelectedProduct(prod);
-    setSelectedVersion(ver);
-    setTimeout(() => {
-      history.push(`/docs/${prod}/${ver}/`);
-    }, 0);
+    // If the product has a 'latest' folder, go there; otherwise land on the
+    // product-root overview page at /docs/{product}/
+    if (hasLatest(prod)) {
+      setSelectedVersion('latest');
+      setTimeout(() => history.push(`/docs/${prod}/latest/`), 0);
+    } else {
+      setSelectedVersion(getDefaultVersion(prod));
+      setTimeout(() => history.push(`/docs/${prod}/`), 0);
+    }
   };
 
   const handleVersionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

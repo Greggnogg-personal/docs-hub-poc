@@ -3,6 +3,10 @@ import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 const sidebars: SidebarsConfig = {
   "assurance": [
     {
+      "type": "doc",
+      "id": "assurance/index"
+    },
+    {
       "type": "category",
       "collapsed": false,
       "label": "v1.13",
@@ -61,6 +65,10 @@ const sidebars: SidebarsConfig = {
     }
   ],
   "cloud": [
+    {
+      "type": "doc",
+      "id": "cloud/index"
+    },
     {
       "type": "category",
       "collapsed": false,
@@ -783,6 +791,10 @@ const sidebars: SidebarsConfig = {
   ],
   "community": [
     {
+      "type": "doc",
+      "id": "community/index"
+    },
+    {
       "type": "category",
       "collapsed": false,
       "label": "v1.0.0",
@@ -795,6 +807,10 @@ const sidebars: SidebarsConfig = {
     }
   ],
   "copilot": [
+    {
+      "type": "doc",
+      "id": "copilot/index"
+    },
     {
       "type": "category",
       "collapsed": false,
@@ -820,6 +836,10 @@ const sidebars: SidebarsConfig = {
     }
   ],
   "developer": [
+    {
+      "type": "doc",
+      "id": "developer/index"
+    },
     {
       "type": "category",
       "collapsed": false,
@@ -894,6 +914,10 @@ const sidebars: SidebarsConfig = {
     }
   ],
   "diode": [
+    {
+      "type": "doc",
+      "id": "diode/index"
+    },
     {
       "type": "category",
       "collapsed": false,
@@ -1006,6 +1030,10 @@ const sidebars: SidebarsConfig = {
   ],
   "discovery": [
     {
+      "type": "doc",
+      "id": "discovery/index"
+    },
+    {
       "type": "category",
       "collapsed": false,
       "label": "v1.13",
@@ -1053,6 +1081,10 @@ const sidebars: SidebarsConfig = {
   ],
   "docs-publisher": [
     {
+      "type": "doc",
+      "id": "docs-publisher/index"
+    },
+    {
       "type": "category",
       "collapsed": false,
       "label": "1.0.6",
@@ -1065,6 +1097,10 @@ const sidebars: SidebarsConfig = {
     }
   ],
   "enterprise": [
+    {
+      "type": "doc",
+      "id": "enterprise/index"
+    },
     {
       "type": "category",
       "collapsed": false,
@@ -1581,6 +1617,10 @@ const sidebars: SidebarsConfig = {
   ],
   "extensions": [
     {
+      "type": "doc",
+      "id": "extensions/index"
+    },
+    {
       "type": "category",
       "collapsed": false,
       "label": "v1.0.0",
@@ -2023,6 +2063,10 @@ const sidebars: SidebarsConfig = {
   ],
   "integrations": [
     {
+      "type": "doc",
+      "id": "integrations/index"
+    },
+    {
       "type": "category",
       "collapsed": false,
       "label": "v1.0.0",
@@ -2365,6 +2409,10 @@ const sidebars: SidebarsConfig = {
   ],
   "mcp": [
     {
+      "type": "doc",
+      "id": "mcp/index"
+    },
+    {
       "type": "category",
       "collapsed": false,
       "label": "v1.0.0",
@@ -2381,6 +2429,10 @@ const sidebars: SidebarsConfig = {
     }
   ],
   "netbox": [
+    {
+      "type": "doc",
+      "id": "netbox/index"
+    },
     {
       "type": "category",
       "collapsed": false,
@@ -9401,6 +9453,10 @@ const sidebars: SidebarsConfig = {
   ],
   "orb-agent": [
     {
+      "type": "doc",
+      "id": "orb-agent/index"
+    },
+    {
       "type": "category",
       "collapsed": false,
       "label": "v1.0.0",
@@ -9590,6 +9646,10 @@ const sidebars: SidebarsConfig = {
   ],
   "preview": [
     {
+      "type": "doc",
+      "id": "preview/index"
+    },
+    {
       "type": "category",
       "collapsed": false,
       "label": "v1.0.0",
@@ -9690,6 +9750,10 @@ const sidebars: SidebarsConfig = {
   ],
   "sdks": [
     {
+      "type": "doc",
+      "id": "sdks/index"
+    },
+    {
       "type": "category",
       "collapsed": false,
       "label": "v1.0.0",
@@ -9776,6 +9840,10 @@ const sidebars: SidebarsConfig = {
     }
   ],
   "shared": [
+    {
+      "type": "doc",
+      "id": "shared/index"
+    },
     {
       "type": "category",
       "collapsed": false,
